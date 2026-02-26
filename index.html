@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社團法人中華亞太文化交流協會 | CAPCCA</title>
+    <meta name="description" content="社團法人中華亞太文化交流協會，促進亞太地區人民間經濟、人文、社會文化之間交流，提供企業培訓課程及學術期刊。">
+    <link rel="canonical" href="https://cap-cca.org/">
+    <meta property="og:title" content="社團法人中華亞太文化交流協會">
+    <meta property="og:description" content="促進亞太地區人民間經濟、人文、社會文化之間交流">
+    <meta property="og:image" content="https://cap-cca.org/assets/images/og-image.jpg">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/animations.css">
+    <style>
+        /* ── Hero ── */
+        .hero {
+            min-height: 92vh;
+            background: linear-gradient(135deg, #071d38 0%, #0B2545 40%, #13395E 70%, #174d7a 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 60% at 80% 40%, rgba(212, 160, 23, .15) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 10% 70%, rgba(74, 154, 196, .12) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Ghost map watermark */
+        .hero__map-bg {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 55%;
+            opacity: 0.055;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 1;
+            padding-block: clamp(var(--space-16), 12vw, var(--space-24));
+        }
+
+        .hero__eyebrow {
+            font-family: var(--font-en);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-accent-300);
+            margin-bottom: var(--space-5);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .hero__eyebrow::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 2px;
+            background: var(--color-accent-400);
+        }
+
+        .hero__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: var(--space-5);
+            max-width: 680px;
+        }
+
+        .hero__title span {
+            color: var(--color-accent-300);
+        }
+
+        .hero__subtitle {
+            font-size: clamp(var(--text-base), 2vw, var(--text-lg));
+            color: rgba(255, 255, 255, .7);
+            line-height: 1.8;
+            max-width: 520px;
+            margin-bottom: var(--space-8);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .04);
+            pointer-events: none;
+            animation: float linear infinite;
+        }
+
+        /* ── About section ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(var(--space-8), 5vw, var(--space-16));
+            align-items: center;
+        }
+
+        .about-img-area {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-200));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-svg-placeholder {
+            width: 70%;
+            height: 70%;
+            opacity: .5;
+        }
+
+        .about-img-area::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 60%, rgba(29, 111, 164, .15) 100%);
+        }
+
+        .about-stat-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            margin-top: var(--space-6);
+        }
+
+        .about-chip {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--color-primary-100);
+            border: 1px solid var(--color-primary-200);
+            border-radius: var(--radius-full);
+            padding: var(--space-2) var(--space-4);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--color-primary-700);
+        }
+
+        /* ── Stats ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-1);
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: rgba(255, 255, 255, .12);
+            margin: var(--space-4) auto;
+        }
+
+        /* ── Journal section ── */
+        .journal-card {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--space-10);
+            align-items: center;
+            background: #fff;
+            border-radius: var(--radius-xl);
+            padding: var(--space-10);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .journal-cover {
+            aspect-ratio: 3/4;
+            background: linear-gradient(145deg, var(--color-primary-800), var(--color-primary-600));
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            padding: var(--space-6);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .journal-cover__name {
+            font-family: var(--font-serif);
+            font-size: var(--text-xl);
+            line-height: 1.5;
+            margin-bottom: var(--space-4);
+        }
+
+        .journal-cover__issue {
+            font-size: var(--text-sm);
+            color: var(--color-accent-300);
+            font-family: var(--font-en);
+        }
+
+        @media (max-width: 1023px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .journal-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero__title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- ══════════════════════════════
+       HERO
+  ═══════════════════════════════ -->
+    <section class="hero" aria-label="首頁 Hero 區塊">
+        <!-- Ghost map -->
+        <svg class="hero__map-bg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <ellipse cx="400" cy="250" rx="350" ry="200" stroke="white" stroke-width="1.5" />
+            <ellipse cx="400" cy="250" rx="250" ry="150" stroke="white" stroke-width="1" />
+            <ellipse cx="400" cy="250" rx="150" ry="90" stroke="white" stroke-width=".8" />
+            <line x1="50" y1="250" x2="750" y2="250" stroke="white" stroke-width=".6" />
+            <line x1="400" y1="50" x2="400" y2="450" stroke="white" stroke-width=".6" />
+            <!-- 略示亞太地圖輪廓 -->
+            <path d="M180 180 Q220 140 280 160 Q320 170 360 150 Q400 130 450 140 Q500 150 540 130 Q580 115 620 140"
+                stroke="white" stroke-width="1.2" fill="none" opacity=".6" />
+            <path
+                d="M160 280 Q200 290 240 270 Q280 250 320 260 Q360 270 400 255 Q440 240 480 250 Q520 260 560 245 Q600 230 640 250"
+                stroke="white" stroke-width=".8" fill="none" opacity=".5" />
+        </svg>
+
+        <!-- Particles -->
+        <div class="particle" style="width:120px;height:120px;top:15%;left:5%;animation-duration:8s;"></div>
+        <div class="particle"
+            style="width:60px;height:60px;top:70%;left:15%;animation-duration:12s;animation-delay:-3s;"></div>
+        <div class="particle"
+            style="width:90px;height:90px;top:30%;right:25%;animation-duration:10s;animation-delay:-5s;"></div>
+
+        <div class="container hero__content">
+            <div class="hero__eyebrow">CAPCCA</div>
+            <h1 class="hero__title animate-on-scroll">
+                促進亞太地區的<br>
+                <span>文化交流與學術發展</span>
+            </h1>
+            <p class="hero__subtitle animate-on-scroll">
+                社團法人中華亞太文化交流協會，依人民團體法設立，以促進亞太地區人民間經濟、人文、社會文化之間交流為宗旨。
+            </p>
+            <div class="cta-group animate-on-scroll">
+                <a href="/about/" class="btn btn-primary btn-lg">了解協會</a>
+                <a href="/training/" class="btn btn-outline-white btn-lg">培訓課程</a>
+            </div>
+        </div>
+    </section>
+
+    <main id="main-content">
+
+        <!-- ══════════════════════════════
+         LATEST NEWS
+    ═══════════════════════════════ -->
+        <section class="section" aria-labelledby="news-heading">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label">News</span>
+                    <h2 class="section-title" id="news-heading">最新消息</h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div id="news-list" class="grid grid-3 stagger" style="margin-bottom: var(--space-10);">
+                    <!-- JS 注入 -->
+                    <div class="skeleton" style="height:280px;border-radius:var(--radius-lg);"></div>
+                    <div class="skeleton" style="height:280px;border-radius:var(--radius-lg);"></div>
+                    <div class="skeleton" style="height:280px;border-radius:var(--radius-lg);"></div>
+                </div>
+                <div class="text-center">
+                    <a href="/news/" class="btn btn-outline">查看全部消息</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════
+         ABOUT
+    ═══════════════════════════════ -->
+        <section class="section section--alt" aria-labelledby="about-heading">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="animate-left">
+                        <div class="about-img-area">
+                            <!-- SVG 裝飾，取代佔位圖 -->
+                            <svg class="about-svg-placeholder" viewBox="0 0 400 300" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="200" cy="150" r="120" stroke="#1D6FA4" stroke-width="2" opacity=".4" />
+                                <circle cx="200" cy="150" r="80" stroke="#4A9AC4" stroke-width="1.5" opacity=".4" />
+                                <circle cx="200" cy="150" r="40" fill="#1D6FA4" opacity=".15" />
+                                <path d="M80 150 Q120 100 160 120 Q200 80 240 100 Q280 80 320 120" stroke="#D4A017"
+                                    stroke-width="2" fill="none" opacity=".5" />
+                                <path d="M80 170 Q130 190 180 165 Q230 145 280 165 Q310 175 320 165" stroke="#1D6FA4"
+                                    stroke-width="1.5" fill="none" opacity=".4" />
+                                <circle cx="160" cy="120" r="6" fill="#D4A017" opacity=".7" />
+                                <circle cx="240" cy="100" r="6" fill="#4A9AC4" opacity=".7" />
+                                <circle cx="200" cy="155" r="8" fill="#0B2545" opacity=".6" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="animate-right">
+                        <span class="section-label">About</span>
+                        <h2 class="section-title" id="about-heading"
+                            style="text-align:left; margin-top: var(--space-3);">關於協會</h2>
+                        <div class="highlight-box" style="margin: var(--space-5) 0;">
+                            <p class="highlight-box__text">
+                                「本會為依據人民團體法設立、非以營利為目的之社會團體，以促進亞太地區人民間經濟、人文、社會文化之間交流為宗旨。」
+                            </p>
+                        </div>
+                        <p>本協會積極推動台灣與亞太各國之間的多元合作，透過培訓課程、學術期刊及各項交流活動，凝聚各界有識之士，共同推動亞太地區之發展與繁榮。</p>
+                        <div class="about-stat-chips">
+                            <div class="about-chip">🎓 多元培訓課程</div>
+                            <div class="about-chip">📖 學術期刊出版</div>
+                            <div class="about-chip">🌏 跨國文化交流</div>
+                        </div>
+                        <div style="margin-top: var(--space-6);">
+                            <a href="/about/" class="btn btn-primary">深入了解 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════
+         TRAINING COURSES
+    ═══════════════════════════════ -->
+        <section class="section" aria-labelledby="training-heading">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label">Training</span>
+                    <h2 class="section-title" id="training-heading">培訓課程</h2>
+                    <p class="section-subtitle">六大類別培訓課程，協助企業與個人提升專業競爭力</p>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="grid grid-3 stagger" id="course-cats">
+                    <!-- JS 注入 -->
+                </div>
+                <div class="text-center" style="margin-top: var(--space-10);">
+                    <a href="/training/register.html" class="btn btn-accent btn-lg">立即報名</a>
+                    <a href="/training/corporate.html" class="btn btn-outline"
+                        style="margin-left: var(--space-4);">企業包班洽詢</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════
+         STATS
+    ═══════════════════════════════ -->
+        <section class="section section--dark" aria-label="協會數字統計">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label"
+                        style="background:rgba(255,255,255,.1);color:var(--color-accent-300);border-color:rgba(255,255,255,.15);">Numbers</span>
+                    <h2 class="section-title section-title--light">協會亮點數字</h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item animate-scale">
+                        <div class="stat-number"><span data-target="100">0</span><span class="stat-suffix">+</span>
+                        </div>
+                        <div class="stat-label">會員人數</div>
+                    </div>
+                    <div class="stat-item animate-scale">
+                        <div class="stat-number"><span data-target="10">0</span><span class="stat-suffix">+</span>
+                        </div>
+                        <div class="stat-label">培訓場次</div>
+                    </div>
+                    <div class="stat-item animate-scale">
+                        <div class="stat-number"><span data-target="10">0</span></div>
+                        <div class="stat-label">出刊期數</div>
+                    </div>
+                    <div class="stat-item animate-scale">
+                        <div class="stat-number"><span data-target="10">0</span><span class="stat-suffix">+</span></div>
+                        <div class="stat-label">合作單位</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════
+         JOURNAL
+    ═══════════════════════════════ -->
+        <section class="section section--alt" aria-labelledby="journal-heading">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label">Journal</span>
+                    <h2 class="section-title" id="journal-heading">學術期刊</h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="journal-card animate-on-scroll">
+                    <div class="journal-cover">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
+                            style="margin-bottom:16px;opacity:.8" aria-hidden="true">
+                            <rect x="8" y="4" width="32" height="42" rx="3" fill="white" opacity=".15" />
+                            <rect x="12" y="8" width="32" height="42" rx="3" fill="white" opacity=".2" />
+                            <rect x="16" y="12" width="32" height="42" rx="3" fill="white" opacity=".25" />
+                            <path d="M22 28h20M22 34h14" stroke="white" stroke-width="2" stroke-linecap="round"
+                                opacity=".7" />
+                        </svg>
+                        <div class="journal-cover__name">亞太社科論叢</div>
+                        <div class="journal-cover__issue">Asia Pacific Journal of Social Sciences</div>
+                    </div>
+                    <div>
+                        <h3 style="font-family:var(--font-serif); margin-bottom:var(--space-4);">《亞太社科論叢》</h3>
+                        <p style="margin-bottom:var(--space-4);">
+                            本刊為一學術性刊物，以探討亞太地區社會、經濟、教育與兩岸關係等議題為主旨。本刊屬社會科學領域，接受中、英文稿件，每年四月及十月出刊。</p>
+                        <p style="margin-bottom:var(--space-6);">本刊採取雙向匿名審查制度，鼓勵學者踴躍投稿，尤其歡迎年輕學者參與。</p>
+                        <div class="about-stat-chips" style="margin-bottom:var(--space-6);">
+                            <div class="about-chip">📅 每年2期（4月、10月）</div>
+                            <div class="about-chip">🔍 雙向匿名審查</div>
+                            <div class="about-chip">🌐 中英文稿件均可</div>
+                        </div>
+                        <div class="cta-group">
+                            <a href="/journal/submission.html" class="btn btn-primary">投稿規格</a>
+                            <a href="/journal/issues.html" class="btn btn-outline">歷期目錄</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- JS -->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/animations.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/content-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 最新消息（取3篇）
+            await CMS.renderNewsList('news-list', 3);
+
+            // 課程類別卡片
+            try {
+                const { categories } = await CMS.loadJSON('courses.json');
+                const catEl = document.getElementById('course-cats');
+                if (catEl) {
+                    catEl.innerHTML = categories.map(cat => `
+                        <a href="/training/courses.html#${cat.id}" class="course-cat-card animate-on-scroll">
+                          <div class="course-cat-card__icon">${cat.icon}</div>
+                          <div class="course-cat-card__name">${cat.name}</div>
+                          <div class="course-cat-card__desc">${cat.description}</div>
+                        </a>
+                    `).join('');
+                    Array.from(catEl.children).forEach((child, i) => {
+                        child.style.setProperty('--stagger-i', i);
+                    });
+                    if (typeof window.observeAnimations === 'function') window.observeAnimations();
+                }
+            } catch (e) { console.warn(e); }
+        });
+    </script>
+</body>
+
+</html>

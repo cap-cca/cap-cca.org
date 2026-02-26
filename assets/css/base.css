@@ -1,0 +1,144 @@
+/* ============================================================
+   Base — base.css
+   全域基礎樣式：body、typography、連結
+   ============================================================ */
+
+body {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--color-neutral-700);
+    background-color: var(--color-bg-primary);
+}
+
+/* ── 標題 ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-serif);
+    color: var(--color-neutral-900);
+    line-height: var(--leading-tight);
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+}
+
+h2 {
+    font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+}
+
+h3 {
+    font-size: clamp(var(--text-xl), 2.5vw, var(--text-3xl));
+}
+
+h4 {
+    font-size: var(--text-xl);
+}
+
+h5 {
+    font-size: var(--text-lg);
+}
+
+h6 {
+    font-size: var(--text-base);
+}
+
+/* ── 正文 ── */
+p {
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-loose);
+    color: var(--color-neutral-700);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── 連結 ── */
+a {
+    color: var(--color-primary-600);
+    transition: color var(--duration-normal) var(--ease-out);
+}
+
+a:hover {
+    color: var(--color-primary-800);
+}
+
+/* ── 圖片 ── */
+img {
+    border-radius: var(--radius-md);
+}
+
+/* ── 強調 ── */
+strong {
+    font-weight: 700;
+    color: var(--color-neutral-900);
+}
+
+em {
+    font-style: italic;
+}
+
+/* ── 分隔線 ── */
+hr {
+    border: none;
+    border-top: 1px solid var(--color-neutral-200);
+    margin: var(--space-8) 0;
+}
+
+/* ── 引用框 ── */
+blockquote {
+    border-left: 4px solid var(--color-accent-500);
+    background: var(--color-accent-100);
+    padding: var(--space-4) var(--space-6);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-style: italic;
+    color: var(--color-neutral-700);
+}
+
+/* ── 代碼 ── */
+code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+    background: var(--color-neutral-100);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-700);
+}
+
+/* ── 捲軸美化 ── */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-300);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400);
+}
+
+/* ── 選取樣式 ── */
+::selection {
+    background: var(--color-primary-100);
+    color: var(--color-primary-900);
+}
+
+/* ── 焦點 ── */
+:focus-visible {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>培訓訊息 ｜社團法人中華亞太文化交流協會</title>
+    <meta name="description" content="中華亞太文化交流協會提供六大類培訓課程，涵蓋經營管理、AI、行銷、人力資源、財務及生產管理領域。">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/animations.css">
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <section class="page-banner">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="您的位置">
+                <a href="/">首頁</a><span aria-hidden="true">›</span>
+                <span class="current" aria-current="page">培訓訊息</span>
+            </nav>
+            <h1 class="page-banner__title">培訓訊息</h1>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <section class="section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label">Training</span>
+                    <h2 class="section-title">六大培訓類別</h2>
+                    <p class="section-subtitle">針對企業與個人需求，提供系統化、實務導向的專業培訓課程</p>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="grid grid-3 stagger" id="course-cats"></div>
+
+                <!-- CTA -->
+                <div class="text-center"
+                    style="margin-top: var(--space-12); padding: var(--space-10); background: linear-gradient(135deg, var(--color-primary-100) 0%, #fff 100%); border-radius: var(--radius-xl); border: 1px solid var(--color-primary-200);">
+                    <h3 style="font-family: var(--font-serif); margin-bottom: var(--space-3);">立即開始您的學習旅程</h3>
+                    <p style="color: var(--color-neutral-500); margin-bottom: var(--space-6);">歡迎個人或企業洽詢，我們提供客製化的培訓方案
+                    </p>
+                    <div class="cta-group" style="justify-content: center;">
+                        <a href="/training/register.html" class="btn btn-primary btn-lg">外訓課程報名</a>
+                        <a href="/training/corporate.html" class="btn btn-accent btn-lg">企業包班洽詢</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 課程亮點 -->
+        <section class="section section--alt">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label">Why Us</span>
+                    <h2 class="section-title">我們的培訓承諾</h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="grid grid-3">
+                    <div class="card animate-on-scroll" style="padding: var(--space-8); text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: var(--space-4);">🎯</div>
+                        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3);">實務導向</h3>
+                        <p>課程設計結合理論基礎與業界實務，學員可立即應用所學。</p>
+                    </div>
+                    <div class="card animate-on-scroll" style="padding: var(--space-8); text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: var(--space-4);">👨‍🏫</div>
+                        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3);">專業師資</h3>
+                        <p>聘請各領域資深專家與業界顧問擔任講師，傳授第一手實戰經驗。</p>
+                    </div>
+                    <div class="card animate-on-scroll" style="padding: var(--space-8); text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: var(--space-4);">🔄</div>
+                        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3);">彈性方案</h3>
+                        <p>提供公開班與企業包班兩種模式，並可依企業需求客製化課程內容。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/animations.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/content-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const { categories } = await CMS.loadJSON('courses.json');
+                const catEl = document.getElementById('course-cats');
+                catEl.innerHTML = categories.map(cat => `
+          <a href="/training/courses.html#${cat.id}" class="course-cat-card animate-on-scroll">
+            <div class="course-cat-card__icon">${cat.icon}</div>
+            <div class="course-cat-card__name">${cat.name}</div>
+            <div class="course-cat-card__desc">${cat.description}</div>
+          </a>
+        `).join('');
+            } catch (e) { }
+        });
+    </script>
+</body>
+
+</html>

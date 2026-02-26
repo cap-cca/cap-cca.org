@@ -1,0 +1,46 @@
+{
+    "categories": [
+        {
+            "id": "management",
+            "name": "經營管理",
+            "icon": "📊",
+            "description": "提升企業管理能力與領導力",
+            "courses": []
+        },
+        {
+            "id": "ai",
+            "name": "AI 類",
+            "icon": "🤖",
+            "description": "掌握人工智慧應用趨勢",
+            "courses": []
+        },
+        {
+            "id": "marketing",
+            "name": "行銷類",
+            "icon": "📢",
+            "description": "品牌行銷與數位策略",
+            "courses": []
+        },
+        {
+            "id": "hr",
+            "name": "人力資源",
+            "icon": "👥",
+            "description": "人才管理與組織發展",
+            "courses": []
+        },
+        {
+            "id": "finance",
+            "name": "財務類",
+            "icon": "💰",
+            "description": "財務分析與投資管理",
+            "courses": []
+        },
+        {
+            "id": "production",
+            "name": "生產管理",
+            "icon": "🏭",
+            "description": "生產效率與品質管理",
+            "courses": []
+        }
+    ]
+}

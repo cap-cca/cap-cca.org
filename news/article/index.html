@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>消息文章 ｜社團法人中華亞太文化交流協會</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/animations.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin-inline: auto;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: var(--space-6);
+        }
+
+        .article-content {
+            font-size: var(--text-lg);
+            line-height: var(--leading-loose);
+            color: var(--color-neutral-700);
+        }
+
+        .article-content p {
+            margin-bottom: var(--space-5);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <section class="page-banner">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="您的位置">
+                <a href="/">首頁</a><span aria-hidden="true">›</span>
+                <a href="/news/">最新消息</a><span aria-hidden="true">›</span>
+                <span class="current" id="article-breadcrumb">文章</span>
+            </nav>
+            <h1 class="page-banner__title" id="article-title">載入中…</h1>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <section class="section">
+            <div class="container">
+                <div class="article-body">
+                    <div class="article-meta" id="article-meta"></div>
+                    <div class="article-content" id="article-body">
+                        <div class="skeleton" style="height:200px;"></div>
+                    </div>
+                    <div
+                        style="margin-top:var(--space-10); padding-top: var(--space-6); border-top: 1px solid var(--color-neutral-200);">
+                        <a href="/news/" class="btn btn-outline">← 返回消息列表</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/animations.js"></script>
+    <script src="/assets/js/content-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => CMS.renderNewsArticle());
+    </script>
+</body>
+
+</html>

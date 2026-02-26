@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>關於協會 ｜社團法人中華亞太文化交流協會</title>
+    <meta name="description" content="了解社團法人中華亞太文化交流協會的宗旨、沿革與組織架構。">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/animations.css">
+    <style>
+        .sub-page-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-6);
+            margin-top: var(--space-10);
+        }
+
+        .sub-page-card {
+            display: block;
+            text-decoration: none;
+            padding: var(--space-8);
+            background: #fff;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--color-neutral-200);
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+
+        .sub-page-card:hover {
+            border-color: var(--color-primary-400);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .sub-page-card__icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-3);
+        }
+
+        .sub-page-card__title {
+            font-family: var(--font-serif);
+            font-size: var(--text-xl);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .sub-page-card__desc {
+            font-size: var(--text-sm);
+            color: var(--color-neutral-500);
+        }
+
+        @media (max-width: 767px) {
+            .sub-page-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <section class="page-banner">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="您的位置">
+                <a href="/">首頁</a><span aria-hidden="true">›</span>
+                <span class="current" aria-current="page">關於協會</span>
+            </nav>
+            <h1 class="page-banner__title">關於協會</h1>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <!-- 宗旨 -->
+        <section class="section">
+            <div class="container" style="max-width: 900px;">
+                <div class="section-header animate-on-scroll" style="text-align:left;">
+                    <span class="section-label">Mission</span>
+                    <h2 class="section-title" style="text-align:left; margin-top: var(--space-3);">本會宗旨</h2>
+                </div>
+                <div class="highlight-box animate-on-scroll">
+                    <p class="highlight-box__text">
+                        本會為依據人民團體法設立、非以營利為目的之社會團體，以促進亞太地區人民間經濟、人文、社會文化之間交流為宗旨。
+                    </p>
+                </div>
+                <div class="animate-on-scroll" style="margin-top: var(--space-8);">
+                    <p>本協會積極推動台灣與亞太區域各國在學術、教育及文化方面的雙向交流，凝聚各界有識之士，透過多元的活動與計畫，共同推動亞太地區的發展與繁榮。</p>
+                    <p>透過企業培訓、學術期刊發行及文化交流活動，本會持續為社會各界提供豐富的知識交流平台，並促進跨國合作機會。</p>
+                </div>
+
+                <!-- Sub-page links -->
+                <div class="sub-page-cards">
+                    <a href="/about/mission.html" class="sub-page-card animate-on-scroll">
+                        <div class="sub-page-card__icon">📋</div>
+                        <div class="sub-page-card__title">本會宗旨</div>
+                        <div class="sub-page-card__desc">詳細了解協會設立宗旨與核心使命</div>
+                    </a>
+                    <a href="/about/charter.html" class="sub-page-card animate-on-scroll">
+                        <div class="sub-page-card__icon">📜</div>
+                        <div class="sub-page-card__title">本會章程</div>
+                        <div class="sub-page-card__desc">查閱協會完整章程條文</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="section section--alt" aria-labelledby="history-heading">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label">History</span>
+                    <h2 class="section-title" id="history-heading">協會沿革</h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2020 年</div>
+                            <p class="timeline-content">社團法人中華亞太文化交流協會正式依人民團體法完成設立登記。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2021 年</div>
+                            <p class="timeline-content">創刊《亞太社科論叢》學術期刊，開始每年定期出版，接受中英文投稿。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2022 年</div>
+                            <p class="timeline-content">正式推動企業培訓課程計畫，六大類別培訓體系逐步建立。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2023—2026 年</div>
+                            <p class="timeline-content">持續擴大交流規模，強化產學合作，並推動數位轉型以服務更多會員。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/animations.js"></script>
+    <script src="/assets/js/components.js"></script>
+</body>
+
+</html>
