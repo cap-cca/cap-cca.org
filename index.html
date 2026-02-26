@@ -11,17 +11,17 @@
     <meta property="og:description" content="促進亞太地區人民間經濟、人文、社會文化之間交流">
     <meta property="og:image" content="https://cap-cca.org/assets/images/og-image.jpg">
     <meta property="og:type" content="website">
-    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="./assets/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/variables.css">
-    <link rel="stylesheet" href="/assets/css/reset.css">
-    <link rel="stylesheet" href="/assets/css/base.css">
-    <link rel="stylesheet" href="/assets/css/layout.css">
-    <link rel="stylesheet" href="/assets/css/components.css">
-    <link rel="stylesheet" href="/assets/css/animations.css">
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/animations.css">
     <style>
         /* ── Hero ── */
         .hero {
@@ -284,8 +284,8 @@
                 社團法人中華亞太文化交流協會，依人民團體法設立，以促進亞太地區人民間經濟、人文、社會文化之間交流為宗旨。
             </p>
             <div class="cta-group animate-on-scroll">
-                <a href="/about/" class="btn btn-primary btn-lg">了解協會</a>
-                <a href="/training/" class="btn btn-outline-white btn-lg">培訓課程</a>
+                <a href="./about/" class="btn btn-primary btn-lg">了解協會</a>
+                <a href="./training/" class="btn btn-outline-white btn-lg">培訓課程</a>
             </div>
         </div>
     </section>
@@ -309,7 +309,7 @@
                     <div class="skeleton" style="height:280px;border-radius:var(--radius-lg);"></div>
                 </div>
                 <div class="text-center">
-                    <a href="/news/" class="btn btn-outline">查看全部消息</a>
+                    <a href="./news/" class="btn btn-outline">查看全部消息</a>
                 </div>
             </div>
         </section>
@@ -355,7 +355,7 @@
                             <div class="about-chip">🌏 跨國文化交流</div>
                         </div>
                         <div style="margin-top: var(--space-6);">
-                            <a href="/about/" class="btn btn-primary">深入了解 →</a>
+                            <a href="./about/" class="btn btn-primary">深入了解 →</a>
                         </div>
                     </div>
                 </div>
@@ -377,8 +377,8 @@
                     <!-- JS 注入 -->
                 </div>
                 <div class="text-center" style="margin-top: var(--space-10);">
-                    <a href="/training/register.html" class="btn btn-accent btn-lg">立即報名</a>
-                    <a href="/training/corporate.html" class="btn btn-outline"
+                    <a href="./training/register.html" class="btn btn-accent btn-lg">立即報名</a>
+                    <a href="./training/corporate.html" class="btn btn-outline"
                         style="margin-left: var(--space-4);">企業包班洽詢</a>
                 </div>
             </div>
@@ -451,8 +451,8 @@
                             <div class="about-chip">🌐 中英文稿件均可</div>
                         </div>
                         <div class="cta-group">
-                            <a href="/journal/submission.html" class="btn btn-primary">投稿規格</a>
-                            <a href="/journal/issues.html" class="btn btn-outline">歷期目錄</a>
+                            <a href="./journal/submission.html" class="btn btn-primary">投稿規格</a>
+                            <a href="./journal/issues.html" class="btn btn-outline">歷期目錄</a>
                         </div>
                     </div>
                 </div>
@@ -465,10 +465,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- JS -->
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/animations.js"></script>
-    <script src="/assets/js/components.js"></script>
-    <script src="/assets/js/content-loader.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/animations.js"></script>
+    <script src="./assets/js/components.js"></script>
+    <script src="./assets/js/content-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             // 最新消息（取3篇）
@@ -480,7 +480,7 @@
                 const catEl = document.getElementById('course-cats');
                 if (catEl) {
                     catEl.innerHTML = categories.map(cat => `
-                        <a href="/training/courses.html#${cat.id}" class="course-cat-card animate-on-scroll">
+                        <a href="./training/courses.html#${cat.id}" class="course-cat-card animate-on-scroll">
                           <div class="course-cat-card__icon">${cat.icon}</div>
                           <div class="course-cat-card__name">${cat.name}</div>
                           <div class="course-cat-card__desc">${cat.description}</div>

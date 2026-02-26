@@ -9,20 +9,37 @@ async function injectTemplate(selector, url) {
     try {
         const res = await fetch(url);
         if (!res.ok) throw new Error(res.status);
-        el.innerHTML = await res.text();
+        let html = await res.text();
+        // 將 navbar/footer 中的 ../../ 動態替換為當前頁面正確的 ROOT_PREFIX
+        html = html.replace(/href=\"\.\.\/\.\.\//g, 'href=\"' + window.ROOT_PREFIX);
+        html = html.replace(/src=\"\.\.\/\.\.\//g, 'src=\"' + window.ROOT_PREFIX);
+        el.innerHTML = html;
         el.dataset.loaded = 'true';
     } catch (e) {
         console.warn(`模板載入失敗 (${url}):`, e);
     }
 }
 
+/* ── 自動推導路徑 prefix ── */
+window.ROOT_PREFIX = (function () {
+    const scripts = document.querySelectorAll('script');
+    let prefix = './';
+    scripts.forEach(s => {
+        const src = s.getAttribute('src');
+        if (src && src.includes('assets/js/main.js')) {
+            prefix = src.replace('assets/js/main.js', '');
+        }
+    });
+    return prefix || './';
+})();
+
 /* ── DOM Ready ── */
 document.addEventListener('DOMContentLoaded', async () => {
 
     // 注入 Navbar & Footer
     await Promise.all([
-        injectTemplate('#navbar-placeholder', '/assets/templates/navbar.html'),
-        injectTemplate('#footer-placeholder', '/assets/templates/footer.html'),
+        injectTemplate('#navbar-placeholder', window.ROOT_PREFIX + 'assets/templates/navbar.html'),
+        injectTemplate('#footer-placeholder', window.ROOT_PREFIX + 'assets/templates/footer.html'),
     ]);
 
     initNavbar();
@@ -73,12 +90,18 @@ function initMobileMenu() {
 function setActiveNavLink() {
     const path = window.location.pathname;
     document.querySelectorAll('.nav-link').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && href !== '/' && path.startsWith(href)) {
-            link.classList.add('active');
-        } else if (href === '/' && (path === '/' || path === '/index.html')) {
-            link.classList.add('active');
-        }
+        try {
+            const resolvedPath = new URL(link.href).pathname;
+            // Check if it's the home page mapping
+            const isHome = resolvedPath === '/' || resolvedPath.endsWith('/index.html') || resolvedPath.endsWith('/cap-cca.org/');
+            const isCurrentHome = path === '/' || path.endsWith('/index.html') || path.endsWith('/cap-cca.org/');
+
+            if (!isHome && path.startsWith(resolvedPath)) {
+                link.classList.add('active');
+            } else if (isHome && isCurrentHome) {
+                link.classList.add('active');
+            }
+        } catch (e) { }
     });
 }
 

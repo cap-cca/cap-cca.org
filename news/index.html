@@ -7,17 +7,17 @@
     <title>最新消息 ｜社團法人中華亞太文化交流協會</title>
     <meta name="description" content="查看中華亞太文化交流協會最新消息，包含公告、期刊徵稿及活動訊息。">
     <link rel="canonical" href="https://cap-cca.org/news/">
-    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/variables.css">
-    <link rel="stylesheet" href="/assets/css/reset.css">
-    <link rel="stylesheet" href="/assets/css/base.css">
-    <link rel="stylesheet" href="/assets/css/layout.css">
-    <link rel="stylesheet" href="/assets/css/components.css">
-    <link rel="stylesheet" href="/assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
     <style>
         .filter-bar {
             display: flex;
@@ -53,7 +53,7 @@
     <section class="page-banner">
         <div class="container">
             <nav class="breadcrumb" aria-label="您的位置">
-                <a href="/">首頁</a>
+                <a href="../">首頁</a>
                 <span aria-hidden="true">›</span>
                 <span class="current" aria-current="page">最新消息</span>
             </nav>
@@ -77,10 +77,10 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/animations.js"></script>
-    <script src="/assets/js/components.js"></script>
-    <script src="/assets/js/content-loader.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/content-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             let allArticles = [];
@@ -97,7 +97,7 @@
                 const list = filter === 'all' ? allArticles : allArticles.filter(a => a.category === filter);
                 const el = document.getElementById('news-list');
                 el.innerHTML = list.map(art => `
-          <a class="card news-card" href="/news/article/?id=${art.id}">
+          <a class="card news-card" href="../news/article/?id=${art.id}">
             <div class="news-card__accent news-card__accent--${art.category === '期刊' ? 'journal' : art.category === '活動' ? 'event' : 'announcement'}"></div>
             <div class="news-card__body">
               <div class="news-card__meta">

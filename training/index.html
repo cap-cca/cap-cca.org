@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>培訓訊息 ｜社團法人中華亞太文化交流協會</title>
     <meta name="description" content="中華亞太文化交流協會提供六大類培訓課程，涵蓋經營管理、AI、行銷、人力資源、財務及生產管理領域。">
-    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/variables.css">
-    <link rel="stylesheet" href="/assets/css/reset.css">
-    <link rel="stylesheet" href="/assets/css/base.css">
-    <link rel="stylesheet" href="/assets/css/layout.css">
-    <link rel="stylesheet" href="/assets/css/components.css">
-    <link rel="stylesheet" href="/assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
     <section class="page-banner">
         <div class="container">
             <nav class="breadcrumb" aria-label="您的位置">
-                <a href="/">首頁</a><span aria-hidden="true">›</span>
+                <a href="../">首頁</a><span aria-hidden="true">›</span>
                 <span class="current" aria-current="page">培訓訊息</span>
             </nav>
             <h1 class="page-banner__title">培訓訊息</h1>
@@ -50,8 +50,8 @@
                     <p style="color: var(--color-neutral-500); margin-bottom: var(--space-6);">歡迎個人或企業洽詢，我們提供客製化的培訓方案
                     </p>
                     <div class="cta-group" style="justify-content: center;">
-                        <a href="/training/register.html" class="btn btn-primary btn-lg">外訓課程報名</a>
-                        <a href="/training/corporate.html" class="btn btn-accent btn-lg">企業包班洽詢</a>
+                        <a href="../training/register.html" class="btn btn-primary btn-lg">外訓課程報名</a>
+                        <a href="../training/corporate.html" class="btn btn-accent btn-lg">企業包班洽詢</a>
                     </div>
                 </div>
             </div>
@@ -87,17 +87,17 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/animations.js"></script>
-    <script src="/assets/js/components.js"></script>
-    <script src="/assets/js/content-loader.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/content-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const { categories } = await CMS.loadJSON('courses.json');
                 const catEl = document.getElementById('course-cats');
                 catEl.innerHTML = categories.map(cat => `
-          <a href="/training/courses.html#${cat.id}" class="course-cat-card animate-on-scroll">
+          <a href="../training/courses.html#${cat.id}" class="course-cat-card animate-on-scroll">
             <div class="course-cat-card__icon">${cat.icon}</div>
             <div class="course-cat-card__name">${cat.name}</div>
             <div class="course-cat-card__desc">${cat.description}</div>

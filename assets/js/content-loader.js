@@ -2,7 +2,7 @@
    content-loader.js — 從 JSON 讀取資料並渲染到頁面
    ============================================================ */
 
-const BASE = '/assets/data';
+const BASE = window.ROOT_PREFIX + 'assets/data';
 const BUST = `?v=${Date.now()}`;
 
 async function loadJSON(path) {
@@ -38,7 +38,7 @@ async function renderNewsList(containerId, limit = 999) {
         }).slice(0, limit);
 
         el.innerHTML = sorted.map(art => `
-      <a class="card news-card animate-on-scroll" href="/news/article/?id=${art.id}">
+      <a class="card news-card animate-on-scroll" href="${window.ROOT_PREFIX}news/article/?id=${art.id}">
         <div class="news-card__accent news-card__accent--${getCategoryClass(art.category)}"></div>
         <div class="news-card__body">
           <div class="news-card__meta">
