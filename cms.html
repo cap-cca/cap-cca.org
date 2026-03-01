@@ -244,6 +244,205 @@
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
             font-family: inherit;
+            flex-wrap: wrap;
+        }
+
+        /* 確保有序/無序清單正確渲染縮排 */
+        .ql-editor ol,
+        .ql-editor ul {
+            padding-left: 1.5em;
+        }
+
+        .ql-editor ol li,
+        .ql-editor ul li {
+            list-style-type: inherit;
+        }
+
+        .ql-editor ol {
+            list-style-type: decimal;
+        }
+
+        .ql-editor ul {
+            list-style-type: disc;
+        }
+
+        /* Size 下拉選單寬度 */
+        .ql-snow .ql-picker.ql-size {
+            width: 90px;
+        }
+
+        /* Size 選項顯示像素值 */
+        .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+            content: attr(data-value) !important;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=""]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=""]::before {
+            content: '預設' !important;
+        }
+
+        /* ── 期刊管理專屬樣式 ── */
+        .j-journal {
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .j-journal-header {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .j-journal-header h3 {
+            margin: 0;
+            font-size: 1em;
+            flex: 1;
+        }
+
+        .j-journal-body {
+            padding: 16px;
+            background: #f8f9ff;
+        }
+
+        .j-volume {
+            border: 1px solid #c0cce0;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .j-volume-header {
+            background: #dde8f5;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .j-volume-header h4 {
+            margin: 0;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        .j-volume-body {
+            padding: 14px;
+            background: #fff;
+        }
+
+        .j-issue {
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .j-issue-header {
+            background: #f0f4f8;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .j-issue-header h5 {
+            margin: 0;
+            font-size: 0.9em;
+            flex: 1;
+        }
+
+        .j-issue-body {
+            padding: 12px;
+            background: #fff;
+        }
+
+        .j-paper {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #fafafa;
+            position: relative;
+        }
+
+        .j-paper-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .j-paper-header span {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: var(--secondary);
+            flex: 1;
+        }
+
+        .j-toggle {
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, .2);
+            border: 1px solid rgba(255, 255, 255, .3);
+            color: inherit;
+            padding: 2px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .j-toggle-dark {
+            font-size: 0.8em;
+            background: rgba(0, 0, 0, .05);
+            border: 1px solid #aaa;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .j-add-btn {
+            font-size: 0.85em;
+            padding: 5px 12px;
+        }
+
+        .j-field {
+            margin-bottom: 8px;
+        }
+
+        .j-field label {
+            display: block;
+            font-size: 0.82em;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 3px;
+        }
+
+        .j-field input:not([type="checkbox"]),
+        .j-field textarea,
+        .j-field select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 6px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9em;
+        }
+
+        .j-field textarea {
+            min-height: 70px;
+            resize: vertical;
         }
     </style>
     <!-- Quill Rich Text Editor -->
@@ -258,7 +457,6 @@
 
         <h1>
             <span>網頁內容與文章管理工具</span>
-            <span class="status-badge">本地即時保存版</span>
         </h1>
 
         <div class="alert" id="successAlert">
@@ -282,11 +480,10 @@
             <div class="form-group">
                 <label for="pageSelect">選擇要編輯的站內頁面與模組</label>
                 <select id="pageSelect">
-                    <option value="news">最新公告 / 文章 (news.json)</option>
+                    <option value="news">最新消息 (news.json)</option>
                     <option value="courses">課程管理 (courses.json)</option>
-                    <option value="index">首頁基本資訊 (index.json)</option>
-                    <option value="about">關於協會 (about.json)</option>
-                    <option value="training">培訓訊息首頁 (training.json)</option>
+                    <option value="journals">學術期刊管理 (journals.json)</option>
+                    <option value="about">協會亮點與沿革 (about.json)</option>
                 </select>
             </div>
         </div>
@@ -299,9 +496,20 @@
             <div id="arrayActions">
                 <!-- 這裡會動態放入新增項目的按鈕 (若為陣列) -->
             </div>
-            <div>
-                <button class="btn-primary" id="saveBtn">💾 保存編輯 (更新至檔案)</button>
-            </div>
+        </div>
+
+        <!-- 浮動儲存列 -->
+        <div id="saveBtnBar" style="
+            position: sticky;
+            bottom: 0;
+            background: linear-gradient(to top, #fff 80%, transparent);
+            padding: 14px 0 10px;
+            margin-top: 20px;
+            z-index: 100;
+            display: flex;
+            justify-content: flex-end;
+        ">
+            <button class="btn-primary" id="saveBtn" style="min-width:200px;font-size:1.05em;">💾 保存編輯 (更新至檔案)</button>
         </div>
 
         <div class="instructions">
@@ -318,32 +526,6 @@
     <script>
         // 定義各個頁面和模組的資料結構與路徑
         const pageSchema = {
-            "index": {
-                filepath: "assets/data/{lang}/index.json",
-                type: "object",
-                fields: {
-                    "hero.title": { type: "text", label: "首頁橫幅大標題", default: "" },
-                    "hero.subtitle": { type: "text", label: "首頁橫幅副標題", default: "" },
-                    "hero.slogan": { type: "text", label: "首頁橫幅標語", default: "" }
-                }
-            },
-            "about": {
-                filepath: "assets/data/{lang}/about.json",
-                type: "object",
-                fields: {
-                    "about.mission.title": { type: "text", label: "本會宗旨區塊標題", default: "" },
-                    "about.mission.content": { type: "richtext", label: "本會宗旨內容介紹", default: "" },
-                    "about.charter.title": { type: "text", label: "本會章程區塊標題", default: "" }
-                }
-            },
-            "training": {
-                filepath: "assets/data/{lang}/training.json",
-                type: "object",
-                fields: {
-                    "training.title": { type: "text", label: "培訓訊息標題", default: "" },
-                    "training.description": { type: "richtext", label: "培訓訊息介紹", default: "" }
-                }
-            },
             "courses": {
                 filepath: "assets/data/courses.json",
                 type: "nested_array",
@@ -362,13 +544,13 @@
                     "hours": { type: "text", label: "時數 (例如: 12)", default: "12" },
                     "audience": { type: "text", label: "適合對象", default: "一般職員" },
                     "fee": { type: "text", label: "費用", default: "請洽詢" },
-                    "description": { type: "richtext", label: "課程介紹", default: "" }
+                    "description": { type: "textarea", label: "課程介紹", default: "" }
                 }
             },
             "news": {
                 filepath: "assets/data/news.json",
                 type: "array",
-                arrayKey: "articles", // 在最外層包裹一層物件 {"articles": [...]}
+                arrayKey: "articles",
                 itemLabel: "公告 / 文章",
                 fields: {
                     "id": { type: "text", label: "文章 ID (例如 2026-004 以避免重複)", default: "" },
@@ -380,6 +562,14 @@
                     "image": { type: "text", label: "圖片位址 (選填，目前暫不支援直接上傳)", default: "" },
                     "pinned": { type: "checkbox", label: "是否置頂於首頁宣傳", default: false }
                 }
+            },
+            "journals": {
+                filepath: "assets/data/journals.json",
+                type: "journals_custom"
+            },
+            "about": {
+                filepath: "assets/data/about.json",
+                type: "about_custom"
             }
         };
 
@@ -486,16 +676,22 @@
 
                 // 透過 setTimeout 確保元素掛載到 DOM 後再初始化 Quill
                 setTimeout(() => {
+                    // 明確註冊 Size 白名單，确保工具列視覺正常
+                    const SizeStyle = Quill.import('attributors/style/size');
+                    SizeStyle.whitelist = ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px'];
+                    Quill.register(SizeStyle, true);
+
                     const quill = new Quill(editorContainer, {
                         theme: 'snow',
                         placeholder: '請輸入內容...',
                         modules: {
                             toolbar: [
-                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                [{ 'header': [1, 2, 3, false] }],
+                                [{ 'size': ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px'] }],
                                 ['bold', 'italic', 'underline', 'strike'],
                                 [{ 'color': [] }, { 'background': [] }],
-                                [{ 'size': ['small', false, 'large', 'huge'] }],
                                 [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                [{ 'indent': '-1' }, { 'indent': '+1' }],
                                 ['link', 'clean']
                             ]
                         }
@@ -599,15 +795,557 @@
                 // ---------- 物件模式 (首頁、關於等屬性平鋪檔) ----------
                 currentData = remoteData || {};
 
-                // 保證全部 key 都存在
                 for (const [key, field] of Object.entries(schema.fields)) {
                     if (currentData[key] === undefined) {
                         currentData[key] = typeof field.default === 'function' ? field.default() : field.default;
                     }
-
                     const fieldUI = createFieldInput(key, field, currentData);
                     editorContainer.appendChild(fieldUI);
                 }
+            }
+            else if (schema.type === "journals_custom") {
+                // ---------- 期刊管理模式 ----------
+                currentData = remoteData ? JSON.parse(JSON.stringify(remoteData)) : { journals: [] };
+                if (!Array.isArray(currentData.journals)) currentData.journals = [];
+
+                const renderJournals = () => {
+                    editorContainer.innerHTML = '';
+                    if (!currentData.journals.length) {
+                        editorContainer.innerHTML = '<p style="color:#888;text-align:center;padding:30px 0">目前尚無期刊，請點擊下方「新增」以建立第一個期刊。</p>';
+                    }
+
+                    currentData.journals.forEach((journal, ji) => {
+                        // ── 期刊卡片 ──
+                        const jBox = document.createElement('div');
+                        jBox.className = 'j-journal';
+
+                        const jHead = document.createElement('div');
+                        jHead.className = 'j-journal-header';
+
+                        const jTitle = document.createElement('h3');
+                        jTitle.textContent = `期刊：${journal.name || '(未命名)'}`;
+
+                        const jToggleBtn = document.createElement('button');
+                        jToggleBtn.className = 'j-toggle';
+                        jToggleBtn.textContent = '折疊';
+
+                        const jDelBtn = document.createElement('button');
+                        jDelBtn.className = 'btn-danger j-add-btn';
+                        jDelBtn.textContent = '✖ 刪除期刊';
+                        jDelBtn.onclick = (e) => { e.stopPropagation(); if (confirm(`確定要刪除《${journal.name || '未命名'}》及其全部內容？`)) { currentData.journals.splice(ji, 1); renderJournals(); } };
+
+                        jHead.appendChild(jTitle);
+                        jHead.appendChild(jToggleBtn);
+                        jHead.appendChild(jDelBtn);
+                        jHead.onclick = () => { jBody.style.display = jBody.style.display === 'none' ? '' : 'none'; jToggleBtn.textContent = jBody.style.display === 'none' ? '展開' : '折疊'; };
+
+                        const jBody = document.createElement('div');
+                        jBody.className = 'j-journal-body';
+
+                        // 期刊基本資訊欄位
+                        const journalFields = [
+                            { key: 'id', label: 'ID 識別碼 (英文小寫，如 apss)，用於網址子目錄' },
+                            { key: 'name', label: '期刊中文名稱' },
+                            { key: 'nameEn', label: '期刊英文名稱' },
+                            { key: 'abbr', label: '縮寫 (Abbr)' },
+                            { key: 'issn', label: 'ISSN' },
+                            { key: 'frequency', label: '出刊頻率' },
+                            { key: 'language', label: '接受語言' },
+                            { key: 'reviewSystem', label: '審查制度' },
+                            { key: 'color', label: '主题色 (Hex)、例如 #1D6FA4' },
+                            { key: 'description', label: '期刊簡介', textarea: true },
+                        ];
+
+                        journalFields.forEach(({ key, label, textarea }) => {
+                            const fw = document.createElement('div');
+                            fw.className = 'j-field';
+                            const lb = document.createElement('label');
+                            lb.textContent = label;
+                            const inp = textarea ? document.createElement('textarea') : document.createElement('input');
+                            if (!textarea) inp.type = 'text';
+                            inp.value = journal[key] || '';
+                            inp.addEventListener('input', e => {
+                                journal[key] = e.target.value;
+                                if (key === 'name') jTitle.textContent = `期刊：${e.target.value || '(未命名)'}`;
+                            });
+                            fw.appendChild(lb); fw.appendChild(inp);
+                            jBody.appendChild(fw);
+                        });
+
+                        // active 勾選
+                        const activeField = document.createElement('div');
+                        activeField.className = 'j-field';
+                        activeField.style.display = 'flex'; activeField.style.alignItems = 'center'; activeField.style.gap = '8px';
+                        const activeCb = document.createElement('input');
+                        activeCb.type = 'checkbox'; activeCb.checked = !!journal['active'];
+                        activeCb.style.transform = 'scale(1.2)';
+                        activeCb.addEventListener('change', e => { journal['active'] = e.target.checked; });
+                        const activeLb = document.createElement('label');
+                        activeLb.textContent = '已啟用（顯示於首頁與期刊總覽）';
+                        activeLb.style.marginBottom = '0';
+                        activeLb.style.cursor = 'pointer';
+                        activeLb.onclick = () => activeCb.click();
+                        activeField.appendChild(activeCb); activeField.appendChild(activeLb);
+                        jBody.appendChild(activeField);
+
+                        // ═══ 投稿規格管理 ═══
+                        const subSec = document.createElement('div');
+                        subSec.className = 'j-volume'; // 借用外框佈局樣式
+                        subSec.style.marginTop = '16px';
+
+                        const subSecHeader = document.createElement('div');
+                        subSecHeader.className = 'j-volume-header';
+                        subSecHeader.style.cursor = 'pointer';
+
+                        const subSecTitleH4 = document.createElement('h4');
+                        subSecTitleH4.textContent = '📄 投稿規格條款';
+                        subSecTitleH4.style.margin = '0';
+                        subSecTitleH4.style.color = 'var(--primary)';
+                        subSecTitleH4.style.flex = '1';
+
+                        const subSecToggle = document.createElement('button');
+                        subSecToggle.className = 'j-toggle';
+                        subSecToggle.textContent = '展開';
+
+                        subSecHeader.appendChild(subSecTitleH4);
+                        subSecHeader.appendChild(subSecToggle);
+
+                        const subSecBody = document.createElement('div');
+                        subSecBody.className = 'j-volume-body';
+                        subSecBody.style.display = 'none'; // 預設折疊起來避免太長
+
+                        subSecHeader.onclick = () => {
+                            const collapsed = subSecBody.style.display === 'none';
+                            subSecBody.style.display = collapsed ? '' : 'none';
+                            subSecToggle.textContent = collapsed ? '折疊' : '展開';
+                        };
+
+                        subSec.appendChild(subSecHeader);
+                        subSec.appendChild(subSecBody);
+
+                        if (!Array.isArray(journal.submission)) journal.submission = [];
+
+                        const renderSubmission = () => {
+                            subSecBody.innerHTML = '';
+
+                            journal.submission.forEach((item, si) => {
+                                const sBox = document.createElement('div');
+                                sBox.className = 'j-issue';
+                                sBox.style.marginBottom = '12px';
+
+                                // 單一條款 Header（不再折疊）
+                                const sHead = document.createElement('div');
+                                sHead.className = 'j-issue-header';
+
+                                const sLabel = document.createElement('h5');
+                                sLabel.style.margin = '0';
+                                sLabel.style.flex = '1';
+                                sLabel.textContent = item.title || `條款 #${si + 1}`;
+
+                                const sDel = document.createElement('button');
+                                sDel.className = 'btn-danger j-add-btn';
+                                sDel.textContent = '刪除此條款';
+                                sDel.onclick = (e) => {
+                                    e.stopPropagation();
+                                    if (confirm('刪除此條款？')) {
+                                        journal.submission.splice(si, 1);
+                                        renderSubmission();
+                                    }
+                                };
+
+                                sHead.appendChild(sLabel);
+                                sHead.appendChild(sDel);
+
+                                const sBody = document.createElement('div');
+                                sBody.className = 'j-issue-body';
+
+                                [{ key: 'title', label: '條款標題（如：一、稿件性質）', type: 'text' },
+                                { key: 'content', label: '條款內容', type: 'textarea' }
+                                ].forEach(({ key, label, type }) => {
+                                    const f = document.createElement('div'); f.className = 'j-field';
+                                    const lb = document.createElement('label'); lb.textContent = label;
+                                    const inp = type === 'textarea' ? document.createElement('textarea') : document.createElement('input');
+                                    if (type !== 'textarea') inp.type = 'text';
+                                    inp.value = item[key] || '';
+                                    inp.addEventListener('input', e => {
+                                        item[key] = e.target.value;
+                                        if (key === 'title') sLabel.textContent = e.target.value || `條款 #${si + 1}`;
+                                    });
+                                    f.appendChild(lb); f.appendChild(inp); sBody.appendChild(f);
+                                });
+
+                                sBox.appendChild(sHead);
+                                sBox.appendChild(sBody);
+                                subSecBody.appendChild(sBox);
+                            });
+
+                            const addSubBtn = document.createElement('button');
+                            addSubBtn.className = 'btn-success j-add-btn';
+                            addSubBtn.textContent = '➕ 新增條款';
+                            addSubBtn.onclick = () => {
+                                journal.submission.push({ title: '', content: '' });
+                                renderSubmission();
+                            };
+                            subSecBody.appendChild(addSubBtn);
+                        };
+
+                        renderSubmission();
+                        jBody.appendChild(subSec);
+
+                        // ═══ 卷列表 ═══
+                        const volSec = document.createElement('div');
+                        volSec.style.marginTop = '16px';
+                        const volTitle = document.createElement('div');
+                        volTitle.innerHTML = '<strong style="color:var(--primary)">📒 卷數管理</strong>';
+                        volTitle.style.marginBottom = '8px';
+                        volSec.appendChild(volTitle);
+
+                        if (!Array.isArray(journal.volumes)) journal.volumes = [];
+
+                        const renderVolumes = () => {
+                            // 清除除標題以外的元素
+                            while (volSec.children.length > 1) volSec.removeChild(volSec.lastChild);
+
+                            journal.volumes.slice().sort((a, b) => b.volume - a.volume).forEach((vol, vi_sorted) => {
+                                const vi = journal.volumes.indexOf(vol);
+                                const vBox = document.createElement('div');
+                                vBox.className = 'j-volume';
+
+                                const vHead = document.createElement('div');
+                                vHead.className = 'j-volume-header';
+                                const vTitle = document.createElement('h4');
+                                vTitle.textContent = `第 ${vol.volume} 卷`;
+
+                                const vToggle = document.createElement('button');
+                                vToggle.className = 'j-toggle-dark'; vToggle.textContent = '折疊';
+
+                                const vDel = document.createElement('button');
+                                vDel.className = 'btn-danger j-add-btn'; vDel.textContent = '刪除此卷';
+                                vDel.onclick = (e) => { e.stopPropagation(); if (confirm(`刪除第 ${vol.volume} 卷將同時刪除其中所有期、論文，確定？`)) { journal.volumes.splice(vi, 1); renderVolumes(); } };
+
+                                vHead.appendChild(vTitle); vHead.appendChild(vToggle); vHead.appendChild(vDel);
+
+                                const vBody = document.createElement('div');
+                                vBody.className = 'j-volume-body';
+
+                                // 卷號編輯
+                                const vNumField = document.createElement('div');
+                                vNumField.className = 'j-field';
+                                const vNumLabel = document.createElement('label');
+                                vNumLabel.textContent = '卷號（數字）';
+                                const vNumInput = document.createElement('input');
+                                vNumInput.type = 'number'; vNumInput.min = '1'; vNumInput.value = vol.volume;
+                                vNumInput.addEventListener('change', e => { vol.volume = parseInt(e.target.value) || 1; vTitle.textContent = `第 ${vol.volume} 卷`; });
+                                vNumField.appendChild(vNumLabel); vNumField.appendChild(vNumInput);
+                                vBody.appendChild(vNumField);
+
+                                vHead.onclick = () => { vBody.style.display = vBody.style.display === 'none' ? '' : 'none'; vToggle.textContent = vBody.style.display === 'none' ? '展開' : '折疊'; };
+
+                                if (!Array.isArray(vol.issues)) vol.issues = [];
+
+                                // ═══ 期列表 ═══
+                                const issSec = document.createElement('div');
+                                issSec.style.marginTop = '10px';
+                                const issTitle = document.createElement('div');
+                                issTitle.innerHTML = '<strong style="font-size:.85em;color:#666">📄 期數列表</strong>';
+                                issTitle.style.marginBottom = '6px';
+                                issSec.appendChild(issTitle);
+
+                                const renderIssues = () => {
+                                    while (issSec.children.length > 1) issSec.removeChild(issSec.lastChild);
+
+                                    vol.issues.slice().sort((a, b) => b.issue - a.issue).forEach((iss, ii_s) => {
+                                        const ii = vol.issues.indexOf(iss);
+                                        const iBox = document.createElement('div');
+                                        iBox.className = 'j-issue';
+
+                                        const iHead = document.createElement('div');
+                                        iHead.className = 'j-issue-header';
+                                        const iTitle = document.createElement('h5');
+                                        iTitle.textContent = `第 ${vol.volume} 卷第 ${iss.issue} 期 — ${iss.title || ''}`;
+
+                                        const iToggle = document.createElement('button');
+                                        iToggle.className = 'j-toggle-dark'; iToggle.textContent = '折疊';
+
+                                        const iDel = document.createElement('button');
+                                        iDel.className = 'btn-danger j-add-btn'; iDel.textContent = '刪除此期';
+                                        iDel.onclick = (e) => { e.stopPropagation(); if (confirm('刪除此期將同時刪除所有論文，確定？')) { vol.issues.splice(ii, 1); renderIssues(); } };
+
+                                        iHead.appendChild(iTitle); iHead.appendChild(iToggle); iHead.appendChild(iDel);
+
+                                        const iBody = document.createElement('div');
+                                        iBody.className = 'j-issue-body';
+
+                                        iHead.onclick = () => { iBody.style.display = iBody.style.display === 'none' ? '' : 'none'; iToggle.textContent = iBody.style.display === 'none' ? '展開' : '折疊'; };
+
+                                        // 期基本欄
+                                        [{ key: 'issue', label: '期號（數字）', type: 'number' },
+                                        { key: 'date', label: '出刊年月 YYYY-MM', type: 'text' },
+                                        { key: 'title', label: '期名稱', type: 'text' }
+                                        ].forEach(({ key, label, type }) => {
+                                            const f = document.createElement('div'); f.className = 'j-field';
+                                            const lb = document.createElement('label'); lb.textContent = label;
+                                            const inp = document.createElement('input'); inp.type = type; inp.value = iss[key] || '';
+                                            inp.addEventListener('input', e => {
+                                                iss[key] = type === 'number' ? (parseInt(e.target.value) || 1) : e.target.value;
+                                                iTitle.textContent = `第 ${vol.volume} 卷第 ${iss.issue} 期 — ${iss.title || ''}`;
+                                            });
+                                            f.appendChild(lb); f.appendChild(inp); iBody.appendChild(f);
+                                        });
+
+                                        if (!Array.isArray(iss.papers)) iss.papers = [];
+
+                                        // ═══ 論文列表 ═══
+                                        const papSec = document.createElement('div');
+                                        papSec.style.marginTop = '10px';
+                                        const papTitle = document.createElement('div');
+                                        papTitle.innerHTML = '<strong style="font-size:.82em;color:#888">📃 論文列表</strong>';
+                                        papTitle.style.marginBottom = '6px';
+                                        papSec.appendChild(papTitle);
+
+                                        const renderPapers = () => {
+                                            while (papSec.children.length > 1) papSec.removeChild(papSec.lastChild);
+
+                                            iss.papers.forEach((paper, pi) => {
+                                                const pBox = document.createElement('div');
+                                                pBox.className = 'j-paper';
+
+                                                const pHead = document.createElement('div');
+                                                pHead.className = 'j-paper-header';
+                                                const pLabel = document.createElement('span');
+                                                pLabel.textContent = `論文 #${pi + 1}: ${paper.title || '(未命名)'}`;
+                                                const pDel = document.createElement('button');
+                                                pDel.className = 'btn-danger j-add-btn'; pDel.textContent = '刪';
+                                                pDel.onclick = () => { if (confirm('刪除此論文？')) { iss.papers.splice(pi, 1); renderPapers(); } };
+                                                pHead.appendChild(pLabel); pHead.appendChild(pDel);
+                                                pBox.appendChild(pHead);
+
+                                                [{ key: 'title', label: '論文標題', type: 'text' },
+                                                { key: 'authors', label: '作者（可多人，用分號隔開）', type: 'text' },
+                                                { key: 'abstract', label: '摘要', type: 'textarea' }
+                                                ].forEach(({ key, label, type }) => {
+                                                    const f = document.createElement('div'); f.className = 'j-field';
+                                                    const lb = document.createElement('label'); lb.textContent = label;
+                                                    const inp = type === 'textarea' ? document.createElement('textarea') : document.createElement('input');
+                                                    if (type !== 'textarea') inp.type = 'text';
+                                                    inp.value = paper[key] || '';
+                                                    inp.addEventListener('input', e => {
+                                                        paper[key] = e.target.value;
+                                                        if (key === 'title') pLabel.textContent = `論文 #${pi + 1}: ${e.target.value || '(未命名)'}`;
+                                                    });
+                                                    f.appendChild(lb); f.appendChild(inp); pBox.appendChild(f);
+                                                });
+
+                                                // PDF 上傳
+                                                const pdfField = document.createElement('div'); pdfField.className = 'j-field';
+                                                const pdfLabel = document.createElement('label');
+                                                pdfLabel.textContent = 'PDF 檔案上傳（將儲存至 assets/pdfs/ 資料夾）';
+                                                const pdfRow = document.createElement('div');
+                                                pdfRow.style.display = 'flex'; pdfRow.style.gap = '6px';
+                                                const pdfInp = document.createElement('input'); pdfInp.type = 'text';
+                                                pdfInp.placeholder = '既存路徑，如 assets/pdfs/apss-v4i1-paper1.pdf';
+                                                pdfInp.value = paper.pdfPath || '';
+                                                pdfInp.addEventListener('input', e => { paper.pdfPath = e.target.value; });
+
+                                                const pdfUpload = document.createElement('input'); pdfUpload.type = 'file'; pdfUpload.accept = '.pdf'; pdfUpload.style.display = 'none';
+                                                const pdfBtn = document.createElement('button');
+                                                pdfBtn.className = 'btn-success j-add-btn'; pdfBtn.textContent = '📂 選擇並上傳 PDF';
+                                                pdfBtn.onclick = () => pdfUpload.click();
+
+                                                pdfUpload.addEventListener('change', async () => {
+                                                    const file = pdfUpload.files[0];
+                                                    if (!file || !projectDirectoryHandle) return;
+                                                    try {
+                                                        const pdfDir = await projectDirectoryHandle.getDirectoryHandle('assets', { create: true })
+                                                            .then(d => d.getDirectoryHandle('pdfs', { create: true }));
+                                                        const fh = await pdfDir.getFileHandle(file.name, { create: true });
+                                                        const wr = await fh.createWritable();
+                                                        await wr.write(file);
+                                                        await wr.close();
+                                                        paper.pdfPath = `assets/pdfs/${file.name}`;
+                                                        pdfInp.value = paper.pdfPath;
+                                                        alert(`✅ PDF 已上傳：${paper.pdfPath}`);
+                                                    } catch (err) { alert('上傳失敗：' + err.message); }
+                                                });
+
+                                                pdfRow.appendChild(pdfInp); pdfRow.appendChild(pdfBtn); pdfRow.appendChild(pdfUpload);
+                                                pdfField.appendChild(pdfLabel); pdfField.appendChild(pdfRow);
+                                                pBox.appendChild(pdfField);
+
+                                                papSec.appendChild(pBox);
+                                            });
+
+                                            // 新增論文按鈕
+                                            const addPapBtn = document.createElement('button');
+                                            addPapBtn.className = 'btn-success j-add-btn'; addPapBtn.textContent = '➕ 新增論文';
+                                            addPapBtn.onclick = () => { iss.papers.push({ title: '', authors: '', abstract: '', pdfPath: '' }); renderPapers(); };
+                                            papSec.appendChild(addPapBtn);
+                                        };
+
+                                        renderPapers();
+                                        iBody.appendChild(papSec);
+                                        iBox.appendChild(iHead); iBox.appendChild(iBody);
+                                        issSec.appendChild(iBox);
+                                    });
+
+                                    // 新增期按鈕
+                                    const addIssBtn = document.createElement('button');
+                                    addIssBtn.className = 'btn-success j-add-btn'; addIssBtn.textContent = '➕ 新增期';
+                                    addIssBtn.onclick = () => {
+                                        vol.issues.push({ issue: (vol.issues.length + 1), date: '', title: '', papers: [] });
+                                        renderIssues();
+                                    };
+                                    issSec.appendChild(addIssBtn);
+                                };
+
+                                renderIssues();
+                                vBody.appendChild(issSec);
+                                vBox.appendChild(vHead); vBox.appendChild(vBody);
+                                volSec.appendChild(vBox);
+                            });
+
+                            // 新增卷按鈕
+                            const addVolBtn = document.createElement('button');
+                            addVolBtn.className = 'btn-success j-add-btn'; addVolBtn.textContent = '➕ 新增卷';
+                            addVolBtn.onclick = () => {
+                                const nextVol = journal.volumes.length
+                                    ? Math.max(...journal.volumes.map(v => v.volume)) + 1
+                                    : 1;
+                                journal.volumes.push({ volume: nextVol, issues: [] });
+                                renderVolumes();
+                            };
+                            volSec.appendChild(addVolBtn);
+                        };
+
+                        renderVolumes();
+                        jBody.appendChild(volSec);
+                        jBox.appendChild(jHead); jBox.appendChild(jBody);
+                        editorContainer.appendChild(jBox);
+                    });
+                };
+
+                // 新增期刊按鈕
+                const addJournalBtn = document.createElement('button');
+                addJournalBtn.className = 'btn-success';
+                addJournalBtn.textContent = '➕ 新增期刊';
+                addJournalBtn.onclick = () => {
+                    currentData.journals.push({
+                        id: '', name: '', nameEn: '', abbr: '', issn: '',
+                        fields: [], frequency: '', language: '', reviewSystem: '',
+                        description: '', color: '#1D6FA4', active: false,
+                        volumes: []
+                    });
+                    renderJournals();
+                };
+                arrayActions.appendChild(addJournalBtn);
+
+                renderJournals();
+            }
+            else if (schema.type === "about_custom") {
+                // ---------- 協會亮點與沿革 (獨立雙陣列) ----------
+                currentData = remoteData || { stats: [], history: [] };
+                if (!Array.isArray(currentData.stats)) currentData.stats = [];
+                if (!Array.isArray(currentData.history)) currentData.history = [];
+
+                editorContainer.innerHTML = ''; // 清空
+
+                // ═══ 亮點數字 stats ═══
+                const statSec = document.createElement('div');
+                statSec.className = 'j-journal';
+                statSec.style.padding = '20px';
+                statSec.style.marginBottom = '30px';
+
+                const statTitle = document.createElement('h3');
+                statTitle.textContent = '🔢 協會亮點數字 (首頁)';
+                statTitle.style.marginBottom = '15px';
+                statSec.appendChild(statTitle);
+
+                const statList = document.createElement('div');
+                statSec.appendChild(statList);
+
+                const renderStats = () => {
+                    statList.innerHTML = '';
+                    currentData.stats.forEach((st, idx) => {
+                        const sBox = document.createElement('div');
+                        sBox.className = 'array-item sub-item';
+                        sBox.style.padding = '10px';
+                        sBox.style.marginBottom = '10px';
+                        sBox.style.background = '#f9f9fb';
+
+                        const head = document.createElement('div');
+                        head.className = 'array-item-header';
+                        head.innerHTML = `<h5 style="margin:0;">- ${st.label || '(未命名)'}</h5>`;
+                        const rmBtn = document.createElement('button');
+                        rmBtn.className = 'btn-danger'; rmBtn.textContent = '❌ 刪除';
+                        rmBtn.onclick = () => { if (confirm('刪除?')) { currentData.stats.splice(idx, 1); renderStats(); } };
+                        head.appendChild(rmBtn);
+                        sBox.appendChild(head);
+
+                        [{ key: 'label', label: '項目名稱 (會員人數)' }, { key: 'value', label: '數值 (100)' }, { key: 'suffix', label: '後綴 (+, 萬)' }]
+                            .forEach(f => {
+                                const ui = createFieldInput(f.key, { type: 'text', label: f.label }, st);
+                                if (f.key === 'label') ui.querySelector('input').addEventListener('input', e => head.querySelector('h5').textContent = `- ${e.target.value || '(未命名)'}`);
+                                sBox.appendChild(ui);
+                            });
+                        statList.appendChild(sBox);
+                    });
+                };
+
+                const addStatBtn = document.createElement('button');
+                addStatBtn.className = 'btn-success'; addStatBtn.textContent = '➕ 新增亮點數字';
+                addStatBtn.onclick = () => { currentData.stats.push({ label: '', value: '0', suffix: '' }); renderStats(); };
+                statSec.appendChild(addStatBtn);
+
+                renderStats();
+                editorContainer.appendChild(statSec);
+
+                // ═══ 協會沿革 history ═══
+                const histSec = document.createElement('div');
+                histSec.className = 'j-journal';
+                histSec.style.padding = '20px';
+
+                const histTitle = document.createElement('h3');
+                histTitle.textContent = '📜 協會沿革紀事 (關於協會)';
+                histTitle.style.marginBottom = '15px';
+                histSec.appendChild(histTitle);
+
+                const histList = document.createElement('div');
+                histSec.appendChild(histList);
+
+                const renderHistory = () => {
+                    histList.innerHTML = '';
+                    currentData.history.forEach((hi, idx) => {
+                        const hBox = document.createElement('div');
+                        hBox.className = 'array-item sub-item';
+                        hBox.style.padding = '10px';
+                        hBox.style.marginBottom = '10px';
+                        hBox.style.background = '#f9f9fb';
+
+                        const head = document.createElement('div');
+                        head.className = 'array-item-header';
+                        head.innerHTML = `<h5 style="margin:0;">- [${hi.year || '年份'}]</h5>`;
+                        const rmBtn = document.createElement('button');
+                        rmBtn.className = 'btn-danger'; rmBtn.textContent = '❌ 刪除';
+                        rmBtn.onclick = () => { if (confirm('刪除?')) { currentData.history.splice(idx, 1); renderHistory(); } };
+                        head.appendChild(rmBtn);
+                        hBox.appendChild(head);
+
+                        const yUi = createFieldInput('year', { type: 'text', label: '年份 (202X 年)' }, hi);
+                        yUi.querySelector('input').addEventListener('input', e => head.querySelector('h5').textContent = `- [${e.target.value || '年份'}]`);
+                        hBox.appendChild(yUi);
+                        hBox.appendChild(createFieldInput('content', { type: 'textarea', label: '內容描述' }, hi));
+
+                        histList.appendChild(hBox);
+                    });
+                };
+
+                const addHistBtn = document.createElement('button');
+                addHistBtn.className = 'btn-success'; addHistBtn.textContent = '➕ 新增沿革紀錄';
+                addHistBtn.onclick = () => { currentData.history.push({ year: '', content: '' }); renderHistory(); };
+                histSec.appendChild(addHistBtn);
+
+                renderHistory();
+                editorContainer.appendChild(histSec);
             }
             else if (schema.type === "array" || schema.type === "nested_array") {
                 // ---------- 陣列模式 (Articles 新聞等) 或是 巢狀陣列 (Courses) ----------
@@ -644,9 +1382,30 @@
                             }
                         };
 
+                        // 折疊按鈕
+                        const collapseBtn = document.createElement('button');
+                        collapseBtn.className = 'j-toggle-dark';
+                        collapseBtn.textContent = '折疊';
+                        collapseBtn.style.marginLeft = 'auto';
+
                         header.appendChild(h3);
+                        header.appendChild(collapseBtn);
                         header.appendChild(removeBtn);
+
+                        // 內容區包裙
+                        const itemContent = document.createElement('div');
+                        itemContent.className = 'array-item__content';
+
+                        header.style.cursor = 'pointer';
+                        header.onclick = (e) => {
+                            if (e.target === removeBtn || removeBtn.contains(e.target)) return;
+                            const collapsed = itemContent.style.display === 'none';
+                            itemContent.style.display = collapsed ? '' : 'none';
+                            collapseBtn.textContent = collapsed ? '折疊' : '展開';
+                        };
+
                         itemBox.appendChild(header);
+                        itemBox.appendChild(itemContent);
 
                         // 把該項目的主欄位建出來
                         for (const [key, field] of Object.entries(schema.fields)) {
@@ -662,7 +1421,7 @@
                                     h3.textContent = `#${index + 1} - ${e.target.value || '(未命名)'}`;
                                 });
                             }
-                            itemBox.appendChild(fieldUI);
+                            itemContent.appendChild(fieldUI);
                         }
 
                         // 如果是 nested_array，渲染子陣列
@@ -682,6 +1441,7 @@
                             subHeader.textContent = `內含 ${schema.subItemLabel}列表:`;
                             subHeader.style.marginTop = '0';
                             subContainer.appendChild(subHeader);
+                            itemContent.appendChild(subContainer);
 
                             const renderSubArray = () => {
                                 // 移除之前的子元素 (除了標題和按鈕)
@@ -752,7 +1512,7 @@
                             };
 
                             subContainer.appendChild(addSubBtn);
-                            itemBox.appendChild(subContainer);
+                            // subContainer 已在上方由 itemContent.appendChild(subContainer) 加入
 
                             // 初次渲染子陣列
                             renderSubArray();
@@ -815,6 +1575,9 @@
             if (schema.type === "array" || schema.type === "nested_array") {
                 finalContentToSave = {};
                 finalContentToSave[schema.arrayKey] = currentData;
+            }
+            else if (schema.type === "about_custom") {
+                finalContentToSave = currentData;
             }
 
             const success = await saveJsonFile(actualPath, finalContentToSave);

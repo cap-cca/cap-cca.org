@@ -7,7 +7,7 @@ async function injectTemplate(selector, url) {
     const el = document.querySelector(selector);
     if (!el) return;
     try {
-        const res = await fetch(url);
+        const res = await fetch(url + '?v=' + new Date().getTime());
         if (!res.ok) throw new Error(res.status);
         let html = await res.text();
         // 將 navbar/footer 中的 ../../ 動態替換為當前頁面正確的 ROOT_PREFIX
@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         injectTemplate('#footer-placeholder', window.ROOT_PREFIX + 'assets/templates/footer.html'),
     ]);
 
+    // 動態填入期刊導覽連結（從 journals.json 讀取）
+    injectJournalNavLinks();
+
     initNavbar();
     initBackToTop();
     initMobileMenu();
@@ -49,6 +52,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSmoothScroll();
     initFooterYear();
 });
+
+/* ── 動態期刊導覽 ── */
+async function injectJournalNavLinks() {
+    try {
+        const res = await fetch(window.ROOT_PREFIX + 'assets/data/journals.json?v=' + Date.now());
+        if (!res.ok) return;
+        const { journals } = await res.json();
+
+        const desktopDropdown = document.getElementById('journal-dropdown');
+        const mobileLinks = document.getElementById('journal-mobile-links');
+
+        if (!journals || (!desktopDropdown && !mobileLinks)) return;
+
+        // 只顯示 active = true 的期刊
+        const activeJournals = journals.filter(j => j.active !== false);
+
+        const makeLink = (j, prefix) =>
+            `<a href="${prefix}journal/${j.id}/">${j.name}</a>`;
+        const mobilePrefix = window.ROOT_PREFIX;
+
+        if (desktopDropdown) {
+            // 保留第一個「期刊總覽」，僅追加個別期刊
+            const existing = desktopDropdown.querySelector('a');
+            desktopDropdown.innerHTML = '';
+            if (existing) desktopDropdown.appendChild(existing);
+            activeJournals.forEach(j => {
+                const a = document.createElement('a');
+                a.href = `${mobilePrefix}journal/info.html?id=${j.id}`;
+                a.textContent = j.name;
+                desktopDropdown.appendChild(a);
+            });
+        }
+
+        if (mobileLinks) {
+            const existing = mobileLinks.querySelector('a');
+            mobileLinks.innerHTML = '';
+            if (existing) mobileLinks.appendChild(existing);
+            activeJournals.forEach(j => {
+                const a = document.createElement('a');
+                a.href = `${mobilePrefix}journal/info.html?id=${j.id}`;
+                a.textContent = j.name;
+                mobileLinks.appendChild(a);
+            });
+        }
+    } catch (e) {
+        console.warn('期刊導覽連結載入失敗', e);
+    }
+}
 
 /* ── Navbar Scroll ── */
 function initNavbar() {

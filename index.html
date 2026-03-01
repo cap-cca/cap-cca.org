@@ -277,7 +277,7 @@
         <div class="container hero__content">
             <div class="hero__eyebrow">CAPCCA</div>
             <h1 class="hero__title animate-on-scroll">
-                促進亞太地區的<br>
+                促進亞太地區<br>
                 <span>文化交流與學術發展</span>
             </h1>
             <p class="hero__subtitle animate-on-scroll">
@@ -286,6 +286,7 @@
             <div class="cta-group animate-on-scroll">
                 <a href="./about/" class="btn btn-primary btn-lg">了解協會</a>
                 <a href="./training/" class="btn btn-outline-white btn-lg">培訓課程</a>
+                <a href="./journal/" class="btn btn-outline-white btn-lg">學術期刊</a>
             </div>
         </div>
     </section>
@@ -363,6 +364,22 @@
         </section>
 
         <!-- ══════════════════════════════
+         STATS
+    ═══════════════════════════════ -->
+        <section class="section section--dark" aria-label="協會數字統計">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-label"
+                        style="background:rgba(255,255,255,.1);color:var(--color-accent-300);border-color:rgba(255,255,255,.15);">Numbers</span>
+                    <h2 class="section-title section-title--light">協會亮點數字</h2>
+                </div>
+                <div class="stats-grid" id="homepage-stats">
+                    <!-- JS 動態渲染 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════
          TRAINING COURSES
     ═══════════════════════════════ -->
         <section class="section" aria-labelledby="training-heading">
@@ -376,49 +393,16 @@
                 <div class="grid grid-3 stagger" id="course-cats">
                     <!-- JS 注入 -->
                 </div>
-                <div class="text-center" style="margin-top: var(--space-10);">
+                <div class="cta-group" style="justify-content:center;margin-top:var(--space-10);">
                     <a href="./training/register.html" class="btn btn-accent btn-lg">立即報名</a>
-                    <a href="./training/corporate.html" class="btn btn-outline"
-                        style="margin-left: var(--space-4);">企業包班洽詢</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══════════════════════════════
-         STATS
-    ═══════════════════════════════ -->
-        <section class="section section--dark" aria-label="協會數字統計">
-            <div class="container">
-                <div class="section-header animate-on-scroll">
-                    <span class="section-label"
-                        style="background:rgba(255,255,255,.1);color:var(--color-accent-300);border-color:rgba(255,255,255,.15);">Numbers</span>
-                    <h2 class="section-title section-title--light">協會亮點數字</h2>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-item animate-scale">
-                        <div class="stat-number"><span data-target="100">0</span><span class="stat-suffix">+</span>
-                        </div>
-                        <div class="stat-label">會員人數</div>
-                    </div>
-                    <div class="stat-item animate-scale">
-                        <div class="stat-number"><span data-target="0">0</span></div>
-                        <div class="stat-label">培訓場次</div>
-                    </div>
-                    <div class="stat-item animate-scale">
-                        <div class="stat-number"><span data-target="?">0</span></div>
-                        <div class="stat-label">出刊期數</div>
-                    </div>
-                    <div class="stat-item animate-scale">
-                        <div class="stat-number"><span data-target="0">0</span></div>
-                        <div class="stat-label">合作單位</div>
-                    </div>
+                    <a href="./training/corporate.html" class="btn btn-outline btn-lg">企業包班洽詢</a>
                 </div>
             </div>
         </section>
 
         <!-- ══════════════════════════════
          JOURNAL
-    ═══════════════════════════════ -->
+     ═══════════════════════════════ -->
         <section class="section section--alt" aria-labelledby="journal-heading">
             <div class="container">
                 <div class="section-header animate-on-scroll">
@@ -426,34 +410,12 @@
                     <h2 class="section-title" id="journal-heading">學術期刊</h2>
                     <div class="section-divider"></div>
                 </div>
-                <div class="journal-card animate-on-scroll">
-                    <div class="journal-cover">
-                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
-                            style="margin-bottom:16px;opacity:.8" aria-hidden="true">
-                            <rect x="8" y="4" width="32" height="42" rx="3" fill="white" opacity=".15" />
-                            <rect x="12" y="8" width="32" height="42" rx="3" fill="white" opacity=".2" />
-                            <rect x="16" y="12" width="32" height="42" rx="3" fill="white" opacity=".25" />
-                            <path d="M22 28h20M22 34h14" stroke="white" stroke-width="2" stroke-linecap="round"
-                                opacity=".7" />
-                        </svg>
-                        <div class="journal-cover__name">亞太社科論叢</div>
-                        <div class="journal-cover__issue">Asia Pacific Journal of Social Sciences</div>
-                    </div>
-                    <div>
-                        <h3 style="font-family:var(--font-serif); margin-bottom:var(--space-4);">《亞太社科論叢》</h3>
-                        <p style="margin-bottom:var(--space-4);">
-                            本刊為一學術性刊物，以探討亞太地區社會、經濟、教育與兩岸關係等議題為主旨。本刊屬社會科學領域，接受中、英文稿件，每年四月及十月出刊。</p>
-                        <p style="margin-bottom:var(--space-6);">本刊採取雙向匿名審查制度，鼓勵學者踴躍投稿，尤其歡迎年輕學者參與。</p>
-                        <div class="about-stat-chips" style="margin-bottom:var(--space-6);">
-                            <div class="about-chip">📅 每年2期（4月、10月）</div>
-                            <div class="about-chip">🔍 雙向匿名審查</div>
-                            <div class="about-chip">🌐 中英文稿件均可</div>
-                        </div>
-                        <div class="cta-group">
-                            <a href="./journal/submission.html" class="btn btn-primary">投稿規格</a>
-                            <a href="./journal/issues.html" class="btn btn-outline">歷期目錄</a>
-                        </div>
-                    </div>
+                <div id="homepage-journal-list">
+                    <!-- JS 動態渲染 -->
+                    <div class="skeleton" style="height:220px; border-radius:var(--radius-xl);"></div>
+                </div>
+                <div style="text-align:center; margin-top: var(--space-8);">
+                    <a href="./journal/" class="btn btn-outline">查看所有期刊 →</a>
                 </div>
             </div>
         </section>
@@ -473,6 +435,9 @@
             // 最新消息（取3篇）
             await CMS.renderNewsList('news-list', 3);
 
+            // 亮點數字
+            await CMS.renderStats('homepage-stats');
+
             // 課程類別卡片
             try {
                 const { categories } = await CMS.loadJSON('courses.json');
@@ -491,6 +456,43 @@
                     if (typeof window.observeAnimations === 'function') window.observeAnimations();
                 }
             } catch (e) { console.warn(e); }
+
+            // 期刊總覽：動態渲染 journals.json 中 active 的期刊
+            try {
+                const jData = await CMS.loadJSON('journals.json');
+                const jList = document.getElementById('homepage-journal-list');
+                if (jList && jData.journals) {
+                    const activeJournals = jData.journals.filter(j => j.active);
+                    jList.innerHTML = activeJournals.map(j => `
+                        <div class="journal-card animate-on-scroll">
+                            <div class="journal-cover" style="background: linear-gradient(145deg, color-mix(in srgb, ${j.color} 60%, #0B2545), ${j.color});">
+                                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" style="margin-bottom:16px;opacity:.8" aria-hidden="true">
+                                    <rect x="8" y="4" width="32" height="42" rx="3" fill="white" opacity=".15"/>
+                                    <rect x="12" y="8" width="32" height="42" rx="3" fill="white" opacity=".2"/>
+                                    <rect x="16" y="12" width="32" height="42" rx="3" fill="white" opacity=".25"/>
+                                    <path d="M22 28h20M22 34h14" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                                </svg>
+                                <div class="journal-cover__name">${j.name}</div>
+                                <div class="journal-cover__issue">${j.nameEn}</div>
+                            </div>
+                            <div>
+                                <h3 style="font-family:var(--font-serif); margin-bottom:var(--space-4);">《${j.name}》</h3>
+                                <p style="margin-bottom:var(--space-5);">${j.description}</p>
+                                <div class="about-stat-chips" style="margin-bottom:var(--space-6);">
+                                    <div class="about-chip">📅 ${j.frequency}</div>
+                                    <div class="about-chip">🔍 ${j.reviewSystem}</div>
+                                    <div class="about-chip">🌐 ${j.language}</div>
+                                </div>
+                                <div class="cta-group">
+                                    <a href="./journal/submission.html?id=${j.id}" class="btn btn-primary">投稿規格</a>
+                                    <a href="./journal/issues.html?id=${j.id}" class="btn btn-outline">期刊檢索</a>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    if (typeof window.observeAnimations === 'function') window.observeAnimations();
+                }
+            } catch (e) { console.warn('journals load error', e); }
         });
     </script>
 </body>

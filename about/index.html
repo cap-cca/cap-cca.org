@@ -85,16 +85,16 @@
             <div class="container" style="max-width: 900px;">
                 <div class="section-header animate-on-scroll" style="text-align:left;">
                     <span class="section-label">Mission</span>
-                    <h2 class="section-title" style="text-align:left; margin-top: var(--space-3);">本會宗旨</h2>
+                    <h2 class="section-title" style="text-align:left; margin-top: var(--space-3);">協會概覽</h2>
                 </div>
                 <div class="highlight-box animate-on-scroll">
                     <p class="highlight-box__text">
-                        本會為依據人民團體法設立、非以營利為目的之社會團體，以促進亞太地區人民間經濟、人文、社會文化之間交流為宗旨。
+                        將台灣企業經營優勢帶動前往亞太地區進行經貿交流與發展。
                     </p>
                 </div>
                 <div class="animate-on-scroll" style="margin-top: var(--space-8);">
-                    <p>本協會積極推動台灣與亞太區域各國在學術、教育及文化方面的雙向交流，凝聚各界有識之士，透過多元的活動與計畫，共同推動亞太地區的發展與繁榮。</p>
-                    <p>透過企業培訓、學術期刊發行及文化交流活動，本會持續為社會各界提供豐富的知識交流平台，並促進跨國合作機會。</p>
+                    <p>作為國際學術交流與全球文化接軌之橋梁，為完成此任務，本會積極開拓海外留學中心，為台灣大專院校招募各國優秀之外籍學生。</p>
+                    <p>配合政府新南向政策，推動南向國家來台留學，提升台灣企業各項工作知識與技能，並協助南向國家來台設廠亦輔導提升幹部管理能力。</p>
                 </div>
 
                 <!-- Sub-page links -->
@@ -121,35 +121,8 @@
                     <h2 class="section-title" id="history-heading">協會沿革</h2>
                     <div class="section-divider"></div>
                 </div>
-                <div class="timeline">
-                    <div class="timeline-item animate-on-scroll">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-year">2020 年</div>
-                            <p class="timeline-content">社團法人中華亞太文化交流協會正式依人民團體法完成設立登記。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item animate-on-scroll">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-year">2021 年</div>
-                            <p class="timeline-content">創刊《亞太社科論叢》學術期刊，開始每年定期出版，接受中英文投稿。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item animate-on-scroll">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-year">2022 年</div>
-                            <p class="timeline-content">正式推動企業培訓課程計畫，六大類別培訓體系逐步建立。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item animate-on-scroll">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-year">2023—2026 年</div>
-                            <p class="timeline-content">持續擴大交流規模，強化產學合作，並推動數位轉型以服務更多會員。</p>
-                        </div>
-                    </div>
+                <div class="timeline" id="about-history">
+                    <!-- JS 動態寫入 -->
                 </div>
             </div>
         </section>
@@ -159,6 +132,12 @@
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/animations.js"></script>
     <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/content-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            CMS.renderHistory('about-history');
+        });
+    </script>
 </body>
 
 </html>

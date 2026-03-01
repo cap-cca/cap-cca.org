@@ -3,7 +3,7 @@
         <div class="footer__main">
 
             <!-- Col 1: Brand -->
-            <div>
+            <div class="footer__brand-col">
                 <img src="../../assets/images/logo.png" alt="CAPCCA Logo" class="footer__logo"
                     style="height:48px;width:auto;filter:brightness(0) invert(1) opacity(.85);margin-bottom:var(--space-4);">
                 <div class="footer__brand-name">社團法人中華亞太文化交流協會</div>
@@ -14,7 +14,7 @@
                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                         </svg>
                     </a>
-                    <a href="mailto:info@cap-cca.org" aria-label="Email">
+                    <a href="mailto:contact@cap-cca.org" aria-label="Email">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -24,46 +24,42 @@
                 </div>
             </div>
 
-            <!-- Col 2: Quick Links -->
-            <div>
-                <div class="footer__col-title">快速連結</div>
-                <nav class="footer__links" aria-label="頁腳導覽">
-                    <a href="../../">協會首頁</a>
-                    <a href="../../about/">關於協會</a>
-                    <a href="../../training/">培訓訊息</a>
-                    <a href="../../journal/">學術期刊</a>
-                    <a href="../../news/">最新消息</a>
-                    <a href="../../member/">會員專區</a>
-                </nav>
-            </div>
+            <!-- Col 2: 快速連結 + 聯絡資訊 上下堆疊 -->
+            <div class="footer__right-col">
 
-            <!-- Col 3: Contact -->
-            <div>
-                <div class="footer__col-title">聯絡資訊</div>
-                <div class="footer__contact-item">
-                    <span class="footer__contact-icon">📧</span>
-                    <a href="mailto:info@cap-cca.org" style="color:inherit;">info@cap-cca.org</a>
+                <!-- 快速連結（橫向排列） -->
+                <div class="footer__section">
+                    <div class="footer__col-title">快速連結</div>
+                    <nav class="footer__links footer__links--horizontal" aria-label="頁腳導覽">
+                        <a href="../../">協會首頁</a>
+                        <a href="../../news/">最新消息</a>
+                        <a href="../../about/">關於協會</a>
+                        <a href="../../training/">培訓訊息</a>
+                        <a href="../../journal/">學術期刊</a>
+                        <a href="../../member/">會員專區</a>
+                    </nav>
                 </div>
-                <div class="footer__contact-item">
-                    <span class="footer__contact-icon">📞</span>
-                    <span>02-XXXX-XXXX</span>
-                </div>
-                <div class="footer__contact-item">
-                    <span class="footer__contact-icon">📍</span>
-                    <span>台北市 XXX 區 XXX 路 XX 號</span>
-                </div>
-            </div>
 
-            <!-- Col 4: Journal -->
-            <div>
-                <div class="footer__col-title">學術期刊</div>
-                <p
-                    style="font-size:var(--text-sm); color:rgba(255,255,255,.6); line-height:1.7; margin-bottom:var(--space-4);">
-                    《亞太社科論叢》<br>每年 4 月、10 月出刊</p>
-                <a href="../../journal/submission.html" class="btn btn-sm btn-outline-white">投稿規格</a>
-            </div>
+                <!-- 聯絡資訊 -->
+                <div class="footer__section">
+                    <div class="footer__col-title">聯絡資訊</div>
+                    <div class="footer__contact-item">
+                        <span class="footer__contact-icon">📧</span>
+                        <a href="mailto:contact@cap-cca.org" style="color:inherit;">contact@cap-cca.org</a>
+                    </div>
+                    <div class="footer__contact-item">
+                        <span class="footer__contact-icon">📞</span>
+                        <span>0X-XXXX-XXXX</span>
+                    </div>
+                    <div class="footer__contact-item">
+                        <span class="footer__contact-icon">📍</span>
+                        <span>XX 市 XXX 區 XXX 路 XX 號</span>
+                    </div>
+                </div>
 
-        </div>
+            </div><!-- /.footer__right-col -->
+
+        </div><!-- /.footer__main -->
 
         <div class="footer__bottom">
             <p class="footer__copyright">

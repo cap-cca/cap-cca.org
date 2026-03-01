@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期刊首頁 ｜社團法人中華亞太文化交流協會</title>
+    <meta name="description" content="">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <style>
+        /* 期刊副導覽 */
+        .journal-subnav {
+            background: var(--color-primary-900);
+            border-bottom: 2px solid var(--journal-color, var(--color-accent-500));
+        }
+
+        .journal-subnav__inner {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            overflow-x: auto;
+            padding: 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .journal-subnav__inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .journal-subnav__link {
+            display: block;
+            padding: var(--space-3) var(--space-5);
+            color: rgba(255, 255, 255, .65);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            white-space: nowrap;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all var(--duration-fast) var(--ease-out);
+        }
+
+        .journal-subnav__link:hover,
+        .journal-subnav__link.active {
+            color: #fff;
+            border-bottom-color: var(--journal-color, var(--color-accent-500));
+        }
+
+        /* 期刊詳情卡片 */
+        .journal-detail-card {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--space-10);
+            background: #fff;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--color-neutral-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .journal-detail-card__cover {
+            padding: var(--space-10) var(--space-8);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 280px;
+        }
+
+        .journal-detail-card__cover-icon {
+            margin-bottom: var(--space-4);
+            opacity: 0.85;
+        }
+
+        .journal-detail-card__cover-name {
+            font-family: var(--font-serif);
+            font-size: var(--text-xl);
+            line-height: 1.4;
+            margin-bottom: var(--space-1);
+        }
+
+        .journal-detail-card__cover-en {
+            font-size: var(--text-xs);
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+        }
+
+        .journal-detail-card__body {
+            padding: var(--space-8) var(--space-8) var(--space-8) 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (max-width: 767px) {
+            .journal-detail-card {
+                grid-template-columns: 1fr;
+            }
+
+            .journal-detail-card__body {
+                padding: var(--space-6);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="journal-subnav" id="journal-subnav">
+        <div class="container journal-subnav__inner" id="subnav-links">
+            <!-- 由 JS 動態注入 -->
+        </div>
+    </div>
+
+    <section class="page-banner">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="您的位置">
+                <a href="../">首頁</a><span aria-hidden="true">›</span>
+                <a href="../journal/">學術期刊</a><span aria-hidden="true">›</span>
+                <span class="current" id="breadcrumb-name" aria-current="page">期刊首頁</span>
+            </nav>
+            <h1 class="page-banner__title" id="page-title">期刊首頁</h1>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <section class="section">
+            <div class="container" id="journal-content">
+                <div class="skeleton" style="height:220px; border-radius:var(--radius-xl);"></div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/content-loader.js"></script>
+    <script>
+        const id = new URLSearchParams(location.search).get('id');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!id) { showError('未指定期刊 ID'); return; }
+            try {
+                const data = await CMS.loadJSON('journals.json');
+                const j = (data.journals || []).find(x => x.id === id);
+                if (!j) { showError('找不到此期刊'); return; }
+
+                // Meta
+                document.title = `${j.name} ｜社團法人中華亞太文化交流協會`;
+                document.querySelector('meta[name="description"]').content = j.description;
+                document.getElementById('breadcrumb-name').textContent = j.name;
+                document.getElementById('page-title').textContent = j.name;
+
+                // 子導覽
+                renderSubnav(j);
+
+                // 主內容
+                document.getElementById('journal-content').innerHTML = `
+                    <div class="journal-detail-card animate-on-scroll">
+                        <div class="journal-detail-card__cover" style="background: linear-gradient(145deg, color-mix(in srgb, ${j.color} 60%, #0B2545), ${j.color});">
+                            <div class="journal-detail-card__cover-icon">
+                                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+                                    <rect x="8" y="4" width="32" height="42" rx="3" fill="white" opacity=".15"/>
+                                    <rect x="12" y="8" width="32" height="42" rx="3" fill="white" opacity=".2"/>
+                                    <rect x="16" y="12" width="32" height="42" rx="3" fill="white" opacity=".25"/>
+                                    <path d="M22 28h20M22 34h14" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                                </svg>
+                            </div>
+                            <div class="journal-detail-card__cover-name">${j.name}</div>
+                            <div class="journal-detail-card__cover-en">${j.nameEn}</div>
+                        </div>
+                        <div class="journal-detail-card__body">
+                            <h2 style="font-family:var(--font-serif);margin-bottom:var(--space-4);">《${j.name}》</h2>
+                            <p style="margin-bottom:var(--space-5);color:var(--color-neutral-600);line-height:var(--leading-relaxed);">${j.description}</p>
+                            <div class="about-stat-chips" style="margin-bottom:var(--space-6);">
+                                <div class="about-chip">📅 ${j.frequency}</div>
+                                <div class="about-chip">🔍 ${j.reviewSystem}</div>
+                                <div class="about-chip">🌐 ${j.language}</div>
+                            </div>
+                            <div class="cta-group">
+                                <a href="./submission.html?id=${j.id}" class="btn btn-primary">投稿規格</a>
+                                <a href="./issues.html?id=${j.id}" class="btn btn-outline">期刊檢索</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+                if (typeof window.observeAnimations === 'function') window.observeAnimations();
+            } catch (e) {
+                showError('資料載入失敗，請稍後再試。');
+            }
+        });
+
+        function renderSubnav(j) {
+            document.getElementById('journal-subnav').style.setProperty('--journal-color', j.color);
+            document.getElementById('subnav-links').innerHTML = `
+                <a href="./index.html" class="journal-subnav__link">← 所有期刊</a>
+                <a href="./info.html?id=${j.id}" class="journal-subnav__link active">期刊首頁</a>
+                <a href="./submission.html?id=${j.id}" class="journal-subnav__link">投稿規格</a>
+                <a href="./issues.html?id=${j.id}" class="journal-subnav__link">期刊檢索</a>`;
+        }
+
+        function showError(msg) {
+            document.getElementById('journal-content').innerHTML =
+                `<div style="text-align:center;padding:var(--space-16);color:var(--color-neutral-500);">
+                    <p style="font-size:3rem;margin-bottom:var(--space-4);">📖</p>
+                    <p>${msg}</p>
+                    <a href="./index.html" class="btn btn-primary" style="margin-top:var(--space-6);">返回期刊總覽</a>
+                </div>`;
+        }
+    </script>
+</body>
+
+</html>

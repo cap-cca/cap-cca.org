@@ -82,3 +82,5 @@ function animateCounter(el, target) {
     };
     requestAnimationFrame(frame);
 }
+
+window.initCounters = initCounters;

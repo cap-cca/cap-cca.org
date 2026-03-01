@@ -1,0 +1,123 @@
+{
+    "journals": [
+        {
+            "id": "apss",
+            "name": "亞太社科論叢",
+            "nameEn": "Asia Pacific Journal of Social Sciences",
+            "abbr": "APSS",
+            "issn": "XXXX-XXXX",
+            "fields": [
+                "社會科學",
+                "經濟",
+                "教育",
+                "人文"
+            ],
+            "frequency": "每年2期（4月、10月）",
+            "language": "中文、英文",
+            "reviewSystem": "雙向匿名審查",
+            "description": "本刊為一學術性刊物，以探討亞太地區經濟、社會人文、管理、教育等議題為主旨。本刊接受中、英文稿件，屬社科學門，接受理論與實證的論文。尤其鼓勵年輕學者投稿。",
+            "color": "#1D6FA4",
+            "active": true,
+            "submission": [
+                {
+                    "title": "一、稿件性質與字數",
+                    "content": "《亞太社科論叢》（以下簡稱本刊）為一學術性刊物，以探討亞太地區經濟、社會人文、管理、教育…等議題為主旨。本刊接受中、英文稿件，中文稿件字數以七千至一萬五千字為度；英文稿件字數以七千至一萬字為度。本刊屬社科學門，接受理論與實證的論文。本刊每年四、十月出刊，歡迎各界針對相關議題踴躍投稿，尤其鼓勵年輕學者投稿。"
+                },
+                {
+                    "title": "二、投稿要求",
+                    "content": "請勿一稿兩投。來稿請依本刊撰稿規範撰寫，不符者，本刊有權退稿。"
+                },
+                {
+                    "title": "三、審查制度",
+                    "content": "本刊投稿論文採用雙向匿名審查制度。每篇論文由主編自審查名單中聘請至少兩位評審進行審查。審稿人依「採用、修改後採用、修改後再審、不採用」等四種審查分類提出書面審查意見，審查完成後於兩周內通知作者審查結果。"
+                },
+                {
+                    "title": "四、學術用語",
+                    "content": "本刊為臺灣發行之學術期刊，撰稿時請用臺灣通用之學術用語。"
+                },
+                {
+                    "title": "五、修改及潤稿權",
+                    "content": "來稿須經本刊正式審稿程式，本刊對來稿有建議修改及潤稿權。"
+                },
+                {
+                    "title": "六、審查流程",
+                    "content": "稿件初審通過後將進入雙向匿名審查。本刊將稿件寄送予編輯委員以建議審查名單。每篇論文由主編自審查名單中聘請至少兩位評審進行審查。審稿人依「採用、修改後採用、修改後再審、不採用」等四種審查分類提出書面審查意見，審查完成後於兩周內通知作者審查結果。 "
+                },
+                {
+                    "title": "七、審查標準",
+                    "content": "本刊審查標準以學術價值為依據，要求稿件在理論上須有所創新、在推論分析上須適切嚴謹，或在資料蒐集上有所貢獻。依據前述審查標準，本刊編輯委員會對接受稿件刊登保否有最終決定權。"
+                },
+                {
+                    "title": "八、著作權",
+                    "content": "投稿著作所有列名作者皆須同意經本刊刊載之論文，其著作財產權即讓與社團法人中華亞太文化交流協會，並須簽署〈投稿人聲明暨著作權讓與書〉；但作者仍保有本著作未來自行集結出版、教學等個人使用之權利。"
+                },
+                {
+                    "title": "九、截稿日期",
+                    "content": "本刊採隨到隨審方式，無截稿日期之限制。來稿請以電子郵件寄至contact@cap-cca.org，本刊編輯部收件後將於10日內回函確認收件。"
+                },
+                {
+                    "title": "十、格式要求",
+                    "content": "按一般學術論文要求。"
+                }
+            ],
+            "volumes": [
+                {
+                    "volume": 1,
+                    "issues": [
+                        {
+                            "issue": 1,
+                            "date": "2025-03",
+                            "title": "第一卷第一期",
+                            "papers": [
+                                {
+                                    "title": "Analysis of the application of CJ's balanced scorecard performance evaluation system",
+                                    "authors": "Wang JinDao",
+                                    "abstract": "本研究以結構化培訓（Structured Training）視角，探討C公司員工培訓管理的優化。研究發現該公司在培訓需求分析、課程標準化、講師專業技能及評估體系等方面存在問題。研究通過深入訪談與分析，針對培訓需求分析、課程設計、講師選擇及評估方法提出改進措施，並強調需建立系統化的培訓管理機制，以提升培訓質量及企業競爭力。",
+                                    "pdfPath": "assets/pdfs/Analysis-of-the-application-of-CJs-balanced-scorecard-performance-evaluation-system.pdf"
+                                },
+                                {
+                                    "title": "灰色GM(0,N)於短視頻分享對遊客旅遊意向影響實證研究",
+                                    "authors": "林芊妍、陳詠琪",
+                                    "abstract": "本研究探討短視頻分享對遊客旅遊意向的影響，採用灰色 GM(0,N) 模型進行實證分析。透過文獻回顧篩選影響遊客旅遊意向的關鍵因素，並利用問卷調查蒐集數據，結果顯示短視頻內容的易理解性、可信度及平台的個性化推薦對遊客旅遊意向有顯著影響。研究強調短視頻在旅遊推廣中的重要性，並為旅遊企業提供有效行銷策略的依據。",
+                                    "pdfPath": "assets/pdfs/灰色GM0N於短視頻分享對遊客旅遊意向影響實證研究.pdf"
+                                },
+                                {
+                                    "title": "Welfare and Policy Analysis of Misperception",
+                                    "authors": "Chao-Huang Lai",
+                                    "abstract": "本研究建立一個市場決策模型，分析消費者對食品品質的錯誤認知及其對社會福利的影響。研究發現，在資訊不對稱的情況下，食品供應商可能會降低品質以獲取更高利潤，導致整體社會福利降低。針對此問題，研究比較了三種政府政策：強制下架低品質食品、強制銷毀、對違規行為處以罰款。結果顯示，罰款政策最能有效遏止供應商欺騙行為，提高市場整體福利。",
+                                    "pdfPath": "assets/pdfs/Welfare-and-Policy-Analysis-of-Misperception.pdf"
+                                },
+                                {
+                                    "title": "Research on the Optimization of Employee Training Management of Company C from the Perspective of Structured Training",
+                                    "authors": "Chen GuoLin",
+                                    "abstract": "本文運用結構化培訓模型，識別了C公司員工培訓管理中存在的問題。這些問題包括：培訓需求分析不充分、培訓課程缺乏標準化、缺乏具備必要技能的培訓講師，以及培訓評估系統不完善。同時，本文對C公司員工培訓管理中存在的問題原因進行了分類和分析：培訓需求分析中問題的原因、培訓課程中問題的原因、培訓講師遇到問題的原因，以及培訓評估系統中問題的原因。這樣做的目的是優化C公司的員工培訓管理，並為此提出適當的實施和保障措施。",
+                                    "pdfPath": "assets/pdfs/Research-on-the-Optimization-of-Employee-Training-Management-of-Company-C-from-the-Perspective-of-Structured-Training.pdf"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "cars",
+            "name": "中華學術研究",
+            "nameEn": "Chinese Academic Research Studies",
+            "abbr": "CARS",
+            "issn": "XXXX-XXXX",
+            "fields": [
+                "學術研究",
+                "文化",
+                "社會"
+            ],
+            "frequency": "每年1期",
+            "language": "中文、英文",
+            "reviewSystem": "雙向匿名審查",
+            "description": "本刊致力於促進中華文化脈絡下的跨領域學術研究，歡迎來自各學術領域的多元投稿。",
+            "color": "#6B4FA4",
+            "active": true,
+            "submission": [],
+            "volumes": []
+        }
+    ]
+}

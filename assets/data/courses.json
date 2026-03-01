@@ -5,7 +5,15 @@
             "name": "經營管理",
             "icon": "📊",
             "description": "提升企業管理能力與領導力",
-            "courses": []
+            "courses": [
+                {
+                    "name": "範例課程",
+                    "hours": "12",
+                    "audience": "學生與教職員",
+                    "fee": "請洽詢",
+                    "description": "<p>範例課程，詳細內容請洽詢。</p>"
+                }
+            ]
         },
         {
             "id": "ai",
