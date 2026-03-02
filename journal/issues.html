@@ -192,6 +192,13 @@
             overflow: hidden;
         }
 
+        .paper-item__actions {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+            margin-top: var(--space-2);
+        }
+
         .paper-item__pdf.disabled {
             opacity: .4;
             pointer-events: none;
@@ -260,17 +267,28 @@
             }
             return `<div class="issue-card__papers">${papers.map(p => {
                 const pdfHref = p.pdfPath ? (window.ROOT_PREFIX + p.pdfPath) : '#';
+                const readHref = p.pdfPath
+                    ? `${window.ROOT_PREFIX}journal/read.html?url=${encodeURIComponent(window.ROOT_PREFIX + p.pdfPath)}`
+                    : '#';
                 return `
                 <div class="paper-item">
                     <div class="paper-item__title">📄 ${p.title || '（未命名論文）'}</div>
                     ${p.authors ? `<div class="paper-item__author">✍️ ${p.authors}</div>` : ''}
                     ${p.abstract ? `<div class="paper-item__abstract">${p.abstract}</div>` : ''}
-                    <a href="${pdfHref}"
-                       class="btn btn-outline paper-item__pdf ${p.pdfPath ? '' : 'disabled'}"
-                       style="font-size:var(--text-xs);padding:var(--space-1) var(--space-3);"
-                       ${p.pdfPath ? 'target="_blank"' : 'aria-disabled="true"'}>
-                       📥 下載期刊完整 PDF${p.pdfPath ? '' : '（未提供）'}
-                    </a>
+                    <div class="paper-item__actions">
+                        <a href="${readHref}"
+                           class="btn btn-primary paper-item__pdf ${p.pdfPath ? '' : 'disabled'}"
+                           style="font-size:var(--text-xs);padding:var(--space-1) var(--space-3);"
+                           ${!p.pdfPath ? 'aria-disabled="true"' : ''}>
+                           📖 閱讀期刊${p.pdfPath ? '' : '（未提供）'}
+                        </a>
+                        ${p.pdfPath ? `<a href="${pdfHref}"
+                           class="btn btn-outline paper-item__pdf"
+                           style="font-size:var(--text-xs);padding:var(--space-1) var(--space-3);"
+                           target="_blank">
+                           📥 下載 PDF
+                        </a>` : ''}
+                    </div>
                 </div>`;
             }).join('')}</div>`;
         }

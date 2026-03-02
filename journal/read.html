@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>閱讀期刊 ｜社團法人中華亞太文化交流協會</title>
+    <meta name="description" content="線上閱讀 CAPCCA 期刊">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- StPageFlip -->
+    <script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+
+    <style>
+        /* ════════════════════════════════════════
+           Reset & Base
+        ════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            overflow: hidden;
+            /* 整頁不捲動 */
+            height: 100%;
+            font-family: var(--font-sans, 'Noto Sans TC', sans-serif);
+        }
+
+        body {
+            background: #0d1117;
+            background-image:
+                radial-gradient(ellipse 70% 60% at 15% 50%, rgba(13, 37, 69, .6) 0%, transparent 100%),
+                radial-gradient(ellipse 70% 60% at 85% 50%, rgba(11, 37, 69, .4) 0%, transparent 100%);
+        }
+
+        /* ════════════════════════════════════════
+           #reader-page — 整頁 wrapper，自動旋轉的目標
+           預設：position:fixed inset:0，正常橫向登版
+           直向行動：JS 動態設 width/height/top/left/transform
+        ════════════════════════════════════════ */
+        #reader-page {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            transform-origin: center center;
+            /* 旋轉動畫 */
+            transition: transform .35s ease;
+        }
+
+        /* 旋轉時不要 transition（避免初始閃爍） */
+        body.auto-rotated #reader-page {
+            transition: none;
+        }
+
+        /* ════════════════════════════════════════
+           頂部工具列
+        ════════════════════════════════════════ */
+        .reader-topbar {
+            flex-shrink: 0;
+            height: 52px;
+            background: rgba(6, 22, 46, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 160, 23, .3);
+            padding: 0 clamp(.75rem, 3vw, 1.75rem);
+            display: flex;
+            align-items: center;
+            gap: .875rem;
+            z-index: 400;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, .55);
+        }
+
+        .reader-topbar__brand {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .reader-topbar__brand img {
+            height: 28px;
+            width: auto;
+        }
+
+        .reader-topbar__sep {
+            width: 1px;
+            height: 18px;
+            background: rgba(255, 255, 255, .14);
+            flex-shrink: 0;
+        }
+
+        .reader-topbar__title {
+            font-family: var(--font-serif, 'Noto Serif TC', serif);
+            font-size: .78rem;
+            color: rgba(255, 255, 255, .8);
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-width: 0;
+        }
+
+        .reader-topbar__actions {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            flex-shrink: 0;
+        }
+
+        /* ── 工具列按鈕 ── */
+        .tbr-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .35rem .85rem;
+            border-radius: 6px;
+            font-size: .78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .15s, transform .15s;
+            border: none;
+            text-decoration: none;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .tbr-btn--ghost {
+            background: rgba(255, 255, 255, .08);
+            color: rgba(255, 255, 255, .8);
+        }
+
+        .tbr-btn--ghost:hover {
+            background: rgba(255, 255, 255, .16);
+            color: #fff;
+        }
+
+        .tbr-btn--gold {
+            background: var(--color-accent-500, #D4A017);
+            color: #111;
+        }
+
+        .tbr-btn--gold:hover {
+            background: var(--color-accent-300, #e8c060);
+            transform: translateY(-1px);
+        }
+
+        /* ════════════════════════════════════════
+           主閱讀區 — 撐滿剩餘高度
+        ════════════════════════════════════════ */
+        .reader-main {
+            flex: 1 1 0;
+            min-height: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* ════════════════════════════════════════
+           載入中
+        ════════════════════════════════════════ */
+        .reader-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            color: rgba(255, 255, 255, .65);
+            font-size: .875rem;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .reader-loading__spinner {
+            width: 52px;
+            height: 52px;
+            border: 3px solid rgba(255, 255, 255, .1);
+            border-top-color: var(--color-accent-500, #D4A017);
+            border-radius: 50%;
+            animation: spin .85s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .reader-loading__progress {
+            font-family: var(--font-en, 'Inter', sans-serif);
+            font-size: .72rem;
+            color: var(--color-accent-300, #e8c060);
+            min-height: 1.2em;
+        }
+
+        .reader-loading__bar-wrap {
+            width: min(260px, 75vw);
+            height: 4px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .reader-loading__bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent-600, #B8860B), var(--color-accent-300, #e8c060));
+            border-radius: 99px;
+            width: 0%;
+            transition: width .3s ease;
+        }
+
+        /* ════════════════════════════════════════
+           錯誤
+        ════════════════════════════════════════ */
+        .reader-error {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255, 255, 255, .6);
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .reader-error__icon {
+            font-size: 3.5rem;
+        }
+
+        .reader-error__title {
+            font-family: var(--font-serif, 'Noto Serif TC', serif);
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .reader-error__msg {
+            font-size: .875rem;
+            max-width: 360px;
+            line-height: 1.75;
+        }
+
+        .reader-error__actions {
+            display: flex;
+            gap: .75rem;
+            margin-top: .5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ════════════════════════════════════════
+           手翻書 wrapper
+        ════════════════════════════════════════ */
+        .flipbook-wrapper {
+            display: none;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 書本底板 */
+        .flipbook-stage {
+            position: relative;
+            padding: clamp(6px, 1.2vw, 14px);
+            background: rgba(0, 0, 0, .28);
+            border-radius: 3px;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, .05),
+                0 40px 100px rgba(0, 0, 0, .7),
+                0 10px 30px rgba(0, 0, 0, .45);
+        }
+
+        #flipbook-container {
+            display: block;
+            position: relative;
+        }
+
+        .stf__parent {
+            margin: 0 auto;
+        }
+
+        canvas {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        /* ════════════════════════════════════════
+           浮動翻頁控制列（覆蓋於書本下緣）
+        ════════════════════════════════════════ */
+        .page-controls {
+            position: absolute;
+            bottom: clamp(12px, 2.5vw, 28px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+
+            display: none;
+            align-items: center;
+            gap: 0;
+
+            background: rgba(6, 22, 46, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .16);
+            border-radius: 999px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, .5),
+                0 2px 8px rgba(0, 0, 0, .35),
+                inset 0 1px 0 rgba(255, 255, 255, .09);
+            padding: .3rem;
+
+            opacity: 1;
+            transition: opacity .5s ease;
+            pointer-events: auto;
+        }
+
+        .page-controls.idle {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .page-nav-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, .78);
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s, color .15s, transform .15s;
+            flex-shrink: 0;
+        }
+
+        .page-nav-btn:hover:not(:disabled) {
+            background: var(--color-accent-500, #D4A017);
+            color: #111;
+            transform: scale(1.1);
+        }
+
+        .page-nav-btn:active:not(:disabled) {
+            transform: scale(.93);
+        }
+
+        .page-nav-btn:disabled {
+            opacity: .22;
+            cursor: not-allowed;
+        }
+
+        .page-controls__center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: .1rem .75rem;
+            min-width: 110px;
+        }
+
+        .page-info {
+            font-family: var(--font-en, 'Inter', sans-serif);
+            font-size: .78rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .92);
+            white-space: nowrap;
+        }
+
+        .page-progress-bar {
+            width: 90px;
+            height: 2px;
+            background: rgba(255, 255, 255, .14);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .page-progress-fill {
+            height: 100%;
+            background: var(--color-accent-500, #D4A017);
+            border-radius: 99px;
+            transition: width .3s ease;
+            width: 0%;
+        }
+
+        /* ════════════════════════════════════════
+           提示 Toast
+        ════════════════════════════════════════ */
+        .hint-toast {
+            position: absolute;
+            bottom: clamp(60px, 10vw, 90px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 499;
+            background: rgba(0, 0, 0, .52);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 999px;
+            padding: .4rem 1.1rem;
+            font-size: .72rem;
+            color: rgba(255, 255, 255, .65);
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity .7s ease;
+        }
+
+        .hint-toast.hidden {
+            opacity: 0;
+        }
+
+        /* ════════════════════════════════════════
+           響應式（按鈕區靠右）
+        ════════════════════════════════════════ */
+        @media (max-width: 640px) {
+
+            .reader-topbar__title,
+            .reader-topbar__sep {
+                display: none;
+            }
+
+            /* 標題隱藏後，按鈕組自動推到最右 */
+            .reader-topbar__actions {
+                margin-left: auto;
+            }
+
+            .tbr-btn__label {
+                display: none;
+            }
+
+            .tbr-btn {
+                padding: .35rem .6rem;
+            }
+
+            .page-controls__center {
+                min-width: 80px;
+                padding: .1rem .5rem;
+            }
+
+            .page-progress-bar {
+                width: 64px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .reader-topbar {
+                height: 46px;
+            }
+
+            .reader-topbar__brand img {
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ★ 整頁 wrapper：自動旋轉的目標 ★ -->
+    <div id="reader-page">
+
+        <!-- 頂部工具列 -->
+        <header class="reader-topbar" role="banner">
+            <a href="../" class="reader-topbar__brand" aria-label="回首頁">
+                <img src="../assets/images/logo.png" alt="CAPCCA">
+            </a>
+            <div class="reader-topbar__sep" aria-hidden="true"></div>
+            <div class="reader-topbar__title" id="reader-title">正在載入期刊…</div>
+            <nav class="reader-topbar__actions" aria-label="閱讀器操作">
+                <button class="tbr-btn tbr-btn--ghost" onclick="history.back()" aria-label="返回上一頁">
+                    ← <span class="tbr-btn__label">返回</span>
+                </button>
+                <a href="#" class="tbr-btn tbr-btn--gold" id="btn-download" target="_blank" aria-label="開啟 PDF 預覽">
+                    📥 <span class="tbr-btn__label">開啟 PDF</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- 主閱讀區 -->
+        <main class="reader-main" id="reader-main" role="main">
+
+            <!-- 載入中 -->
+            <div class="reader-loading" id="reader-loading" role="status" aria-live="polite">
+                <div class="reader-loading__spinner" aria-hidden="true"></div>
+                <p>正在解析 PDF，請稍候…</p>
+                <p class="reader-loading__progress" id="loading-progress"></p>
+                <div class="reader-loading__bar-wrap">
+                    <div class="reader-loading__bar" id="loading-bar"></div>
+                </div>
+            </div>
+
+            <!-- 錯誤 -->
+            <div class="reader-error" id="reader-error" role="alert">
+                <div class="reader-error__icon" aria-hidden="true">📄</div>
+                <div class="reader-error__title">無法載入期刊</div>
+                <p class="reader-error__msg" id="reader-error-msg">
+                    PDF 檔案載入失敗，請確認連結是否正確，或嘗試重新整理頁面。
+                </p>
+                <div class="reader-error__actions">
+                    <button class="tbr-btn tbr-btn--ghost" onclick="location.reload()">重新整理</button>
+                    <button class="tbr-btn tbr-btn--ghost" onclick="history.back()">← 返回</button>
+                </div>
+            </div>
+
+            <!-- 手翻書 -->
+            <div class="flipbook-wrapper" id="flipbook-wrapper">
+
+                <!-- 書本底板 -->
+                <div class="flipbook-stage">
+                    <div id="flipbook-container"></div>
+                </div>
+
+                <!-- 浮動翻頁控制（疊在書上） -->
+                <div class="page-controls" id="page-controls" role="navigation" aria-label="翻頁控制">
+                    <button class="page-nav-btn" id="btn-prev" onclick="prevPage()" aria-label="上一頁"
+                        title="上一頁（← 鍵）">‹</button>
+                    <div class="page-controls__center">
+                        <div class="page-info" id="page-info" aria-live="polite">— / —</div>
+                        <div class="page-progress-bar">
+                            <div class="page-progress-fill" id="page-progress-fill"></div>
+                        </div>
+                    </div>
+                    <button class="page-nav-btn" id="btn-next" onclick="nextPage()" aria-label="下一頁"
+                        title="下一頁（→ 鍵）">›</button>
+                </div>
+
+                <!-- 提示 Toast -->
+                <div class="hint-toast" id="hint-toast" aria-hidden="true">
+                    ← → 鍵翻頁 ・ 點擊頁面邊緣或左右滑動翻頁
+                </div>
+
+            </div><!-- /flipbook-wrapper -->
+
+        </main>
+
+    </div><!-- /#reader-page -->
+
+    <script src="../assets/js/main.js"></script>
+
+    <script>
+        /* ═══════════════════════════════════════
+           PDF.js Worker
+        ═══════════════════════════════════════ */
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        /* ═══════════════════════════════════════
+           URL 參數 & DOM
+        ═══════════════════════════════════════ */
+        const params = new URLSearchParams(location.search);
+        const pdfUrl = params.get('url');
+
+        const elPage = document.getElementById('reader-page');
+        const elLoading = document.getElementById('reader-loading');
+        const elLoadingBar = document.getElementById('loading-bar');
+        const elProgress = document.getElementById('loading-progress');
+        const elError = document.getElementById('reader-error');
+        const elErrorMsg = document.getElementById('reader-error-msg');
+        const elWrapper = document.getElementById('flipbook-wrapper');
+        const elContainer = document.getElementById('flipbook-container');
+        const elControls = document.getElementById('page-controls');
+        const elPageInfo = document.getElementById('page-info');
+        const elProgFill = document.getElementById('page-progress-fill');
+        const elBtnPrev = document.getElementById('btn-prev');
+        const elBtnNext = document.getElementById('btn-next');
+        const elTitle = document.getElementById('reader-title');
+        const elHint = document.getElementById('hint-toast');
+
+        /* ═══════════════════════════════════════
+           下載按鈕 & 標題
+        ═══════════════════════════════════════ */
+        if (pdfUrl) {
+            document.getElementById('btn-download').href = pdfUrl;
+            const rawName = decodeURIComponent(pdfUrl.split('/').pop().replace(/\.pdf$/i, ''));
+            elTitle.textContent = rawName;
+            document.title = `${rawName} ｜CAPCCA 期刊閱讀`;
+        } else {
+            showError('未提供 PDF 網址，請從期刊列表點擊「閱讀完整期刊」進入。');
+        }
+
+        /* ═══════════════════════════════════════
+           狀態
+        ═══════════════════════════════════════ */
+        let pageFlip = null;
+        let totalPages = 0;
+        const canvasList = [];
+
+        /* ═══════════════════════════════════════
+           自動旋轉邏輯
+           直向 (portrait) 且 innerWidth < 640 時，
+           將 #reader-page 旋轉 -90°，模擬橫向閱讀。
+           旋轉後視覺尺寸：寬 = 原 innerHeight，高 = 原 innerWidth
+        ═══════════════════════════════════════ */
+        function isPortraitMobile() {
+            return window.innerWidth < 640 && window.innerHeight > window.innerWidth;
+        }
+
+        function applyAutoRotate() {
+            if (isPortraitMobile()) {
+                const W = window.innerWidth;   // 原始寬（小）
+                const H = window.innerHeight;  // 原始高（大）
+                //  旋轉後元素的 CSS 尺寸需設為 W×H → 視覺上呈現 H×W
+                //  並偏移置中
+                elPage.style.width = H + 'px';
+                elPage.style.height = W + 'px';
+                elPage.style.top = ((H - W) / 2) + 'px';
+                elPage.style.left = (-(H - W) / 2) + 'px';
+                elPage.style.transform = 'rotate(-90deg)';
+                document.body.classList.add('auto-rotated');
+            } else {
+                // 橫向 / 桌面：還原
+                elPage.style.width = '';
+                elPage.style.height = '';
+                elPage.style.top = '';
+                elPage.style.left = '';
+                elPage.style.transform = '';
+                document.body.classList.remove('auto-rotated');
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           計算書本單頁尺寸
+           旋轉後：視覺寬 = innerHeight，視覺高 = innerWidth
+        ═══════════════════════════════════════ */
+        function calcPageSize() {
+            const TOPBAR_H = 52;
+            const A4 = 1.414; // A4 高/寬比
+
+            const rotated = isPortraitMobile();
+            const screenW = window.innerWidth;
+            const screenH = window.innerHeight;
+            // 視覺上的可用尺寸（旋轉後寬高互換）
+            const visW = rotated ? screenH : screenW;
+            const visH = rotated ? screenW : screenH;
+
+            const stagePad = Math.round(Math.min(6 + visW * 0.008, 14));
+            const H_PAD = stagePad * 2 + 4;
+            const W_PAD = stagePad * 2 + 4;
+
+            const availW = visW - W_PAD;
+            const availH = visH - TOPBAR_H - H_PAD;
+
+            // 旋轉後的手機 OR 真實橫向行動裝置 → 雙頁
+            const isLandscapeMobile = !rotated && screenW < 900 && screenW > screenH;
+
+            if (rotated || isLandscapeMobile) {
+                // 橫向（旋轉後或真實橫向）：雙頁並排，最大 520px/頁
+                const maxHalf = Math.min(Math.floor((availW - 4) / 2), 520);
+                const hFromW = Math.round(maxHalf * A4);
+                const pageW = hFromW <= availH ? maxHalf : Math.round(availH / A4);
+                const pageH = Math.round(pageW * A4);
+                return { width: Math.max(pageW, 160), height: Math.max(pageH, 220), single: false };
+            } else if (screenW < 640) {
+                // 未旋轉直向手機：單頁，高度優先
+                const wFromH = Math.floor(availH / A4);
+                const w = Math.min(wFromH, availW);
+                const h = Math.round(w * A4);
+                return { width: Math.max(w, 180), height: Math.max(h, 280), single: true };
+            } else {
+                // 平板 / 桌面：雙頁，最大 620px/頁
+                const maxHalf = screenW < 1024
+                    ? Math.min(Math.floor((availW - 4) / 2), 420)
+                    : Math.min(Math.floor((availW - 4) / 2), 620);
+                const hFromW = Math.round(maxHalf * A4);
+                const pageW = hFromW <= availH ? maxHalf : Math.round(availH / A4);
+                const pageH = Math.round(pageW * A4);
+                return { width: Math.max(pageW, 200), height: Math.max(pageH, 280), single: false };
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           主流程：載入 PDF → 渲染 → PageFlip
+        ═══════════════════════════════════════ */
+        async function initReader() {
+            if (!pdfUrl) return;
+            try {
+                elProgress.textContent = '連線中…';
+
+                const loadingTask = pdfjsLib.getDocument({
+                    url: pdfUrl,
+                    cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+                    cMapPacked: true,
+                });
+
+                loadingTask.onProgress = ({ loaded, total }) => {
+                    if (total > 0) {
+                        const pct = Math.round(loaded / total * 100);
+                        elProgress.textContent = `下載中 ${pct}%`;
+                        elLoadingBar.style.width = (pct * 0.5) + '%';
+                    }
+                };
+
+                const pdf = await loadingTask.promise;
+                totalPages = pdf.numPages;
+
+                const size = calcPageSize();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    elProgress.textContent = `渲染第 ${i} / ${totalPages} 頁…`;
+                    elLoadingBar.style.width = (50 + i / totalPages * 50) + '%';
+
+                    const page = await pdf.getPage(i);
+                    const vp0 = page.getViewport({ scale: 1 });
+                    const scale = Math.min(size.width / vp0.width, size.height / vp0.height);
+                    const vp = page.getViewport({ scale });
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size.width;
+                    canvas.height = size.height;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, size.width, size.height);
+                    ctx.translate((size.width - vp.width) / 2, (size.height - vp.height) / 2);
+                    await page.render({ canvasContext: ctx, viewport: vp }).promise;
+                    canvasList.push(canvas);
+                }
+
+                buildPageFlip(size);
+
+            } catch (err) {
+                console.error('PDF 載入失敗:', err);
+                showError(`PDF 載入失敗：${err.message || '未知錯誤'}`);
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           建立 PageFlip
+        ═══════════════════════════════════════ */
+        function buildPageFlip({ width, height, single }) {
+            elContainer.innerHTML = '';
+            // portrait 模式：container 寬 = 1 頁；landscape 模式：2 頁
+            elContainer.style.width = (single ? width : width * 2) + 'px';
+            elContainer.style.height = height + 'px';
+
+            pageFlip = new St.PageFlip(elContainer, {
+                width,
+                height,
+                size: 'fixed',
+                showCover: false,
+                usePortrait: single,
+                startPage: 0,
+                flippingTime: 620,
+                useMouseEvents: true,
+                swipeDistance: 22,
+                clickEventForward: false,
+                maxShadowOpacity: 0.65,
+                mobileScrollSupport: true,
+            });
+
+            pageFlip.loadFromImages(canvasList.map(c => c.toDataURL('image/jpeg', 0.92)));
+            pageFlip.on('flip', e => updatePageInfo(e.data));
+            pageFlip.on('changeState', () => updatePageInfo(pageFlip.getCurrentPageIndex()));
+
+            elLoading.style.display = 'none';
+            elWrapper.style.display = 'flex';
+            elControls.style.display = 'flex';
+
+            updatePageInfo(0);
+            initIdleHide();
+            scheduleHintDismiss();
+        }
+
+        /* ═══════════════════════════════════════
+           頁碼更新
+        ═══════════════════════════════════════ */
+        function updatePageInfo(idx) {
+            elPageInfo.textContent = `第 ${idx + 1} / ${totalPages} 頁`;
+            elBtnPrev.disabled = idx <= 0;
+            elBtnNext.disabled = idx >= totalPages - 1;
+            const pct = totalPages > 1 ? (idx / (totalPages - 1)) * 100 : 100;
+            elProgFill.style.width = pct + '%';
+            wakeControls();
+        }
+
+        /* ═══════════════════════════════════════
+           翻頁
+        ═══════════════════════════════════════ */
+        function prevPage() { if (pageFlip) pageFlip.flipPrev(); }
+        function nextPage() { if (pageFlip) pageFlip.flipNext(); }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevPage();
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextPage();
+        });
+
+        /* ═══════════════════════════════════════
+           控制列閒置淡出（2.2s 無操作後消失）
+        ═══════════════════════════════════════ */
+        let idleTimer = null;
+        const IDLE_DELAY = 2200;
+
+        function wakeControls() {
+            elControls.classList.remove('idle');
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => elControls.classList.add('idle'), IDLE_DELAY);
+        }
+
+        function initIdleHide() {
+            ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'keydown'].forEach(evt => {
+                document.addEventListener(evt, wakeControls, { passive: true });
+            });
+            elControls.addEventListener('mouseenter', () => {
+                clearTimeout(idleTimer);
+                elControls.classList.remove('idle');
+            });
+            elControls.addEventListener('mouseleave', wakeControls);
+            wakeControls();
+        }
+
+        /* ═══════════════════════════════════════
+           提示 Toast：3.5s 後淡出
+        ═══════════════════════════════════════ */
+        function scheduleHintDismiss() {
+            setTimeout(() => {
+                elHint.classList.add('hidden');
+                setTimeout(() => { elHint.style.display = 'none'; }, 800);
+            }, 3500);
+        }
+
+        /* ═══════════════════════════════════════
+           錯誤
+        ═══════════════════════════════════════ */
+        function showError(msg) {
+            elLoading.style.display = 'none';
+            elWrapper.style.display = 'none';
+            elErrorMsg.textContent = msg;
+            elError.style.display = 'flex';
+            elHint.style.display = 'none';
+        }
+
+        /* ═══════════════════════════════════════
+           視窗/方向改變 → 重新套用旋轉 + 重建 flipbook
+        ═══════════════════════════════════════ */
+        let resizeTimer = null;
+        function handleResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                applyAutoRotate();
+                if (pageFlip && canvasList.length > 0) {
+                    buildPageFlip(calcPageSize());
+                }
+            }, 250);
+        }
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', () => {
+            // orientationchange 後尺寸稍延才穩定
+            setTimeout(handleResize, 120);
+        });
+
+        /* ═══════════════════════════════════════
+           啟動：先旋轉，再載入 PDF
+        ═══════════════════════════════════════ */
+        applyAutoRotate();
+        if (pdfUrl) initReader();
+
+    </script>
+
+</body>
+
+</html>
