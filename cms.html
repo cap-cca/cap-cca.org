@@ -484,6 +484,7 @@
                     <option value="courses">課程管理 (courses.json)</option>
                     <option value="journals">學術期刊管理 (journals.json)</option>
                     <option value="about">協會亮點與沿革 (about.json)</option>
+                    <option value="contact">聯絡資訊 (contact.json)</option>
                 </select>
             </div>
         </div>
@@ -570,6 +571,10 @@
             "about": {
                 filepath: "assets/data/about.json",
                 type: "about_custom"
+            },
+            "contact": {
+                filepath: "assets/data/contact.json",
+                type: "contact_custom"
             }
         };
 
@@ -1347,6 +1352,94 @@
                 renderHistory();
                 editorContainer.appendChild(histSec);
             }
+            else if (schema.type === "contact_custom") {
+                // ---------- 聯絡資訊 ----------
+                currentData = remoteData || { email: '', phone: '', address: '', links: [] };
+                if (!Array.isArray(currentData.links)) currentData.links = [];
+
+                editorContainer.innerHTML = '';
+
+                // ─── 基本聯絡資訊 ───
+                const basicSec = document.createElement('div');
+                basicSec.className = 'j-journal';
+                basicSec.style.padding = '20px';
+                basicSec.style.marginBottom = '24px';
+
+                const basicTitle = document.createElement('h3');
+                basicTitle.textContent = '📋 基本聯絡資訊';
+                basicTitle.style.marginBottom = '16px';
+                basicSec.appendChild(basicTitle);
+
+                [
+                    { key: 'email', label: '📧 電子信箱', type: 'text', placeholder: 'contact@example.org' },
+                    { key: 'phone', label: '📞 聯絡電話', type: 'text', placeholder: '02-XXXX-XXXX' },
+                    { key: 'address', label: '📍 地址', type: 'text', placeholder: 'XX 市 XXX 區 XXX 路 XX 號' },
+                ].forEach(f => {
+                    const ui = createFieldInput(f.key, { type: f.type, label: f.label }, currentData);
+                    basicSec.appendChild(ui);
+                });
+
+                editorContainer.appendChild(basicSec);
+
+                // ─── 外部連結（社群） ───
+                const linkSec = document.createElement('div');
+                linkSec.className = 'j-journal';
+                linkSec.style.padding = '20px';
+
+                const linkTitle = document.createElement('h3');
+                linkTitle.textContent = '🔗 外部連結（社群媒體）';
+                linkTitle.style.marginBottom = '8px';
+                const linkHint = document.createElement('p');
+                linkHint.style.fontSize = '0.82em';
+                linkHint.style.color = '#888';
+                linkHint.style.marginBottom = '16px';
+                linkHint.textContent = 'icon 欄位可填入：facebook、instagram、youtube、line（小寫英文），未識別則顯示文字標籤';
+                linkSec.appendChild(linkTitle);
+                linkSec.appendChild(linkHint);
+
+                const linkList = document.createElement('div');
+                linkSec.appendChild(linkList);
+
+                const renderLinks = () => {
+                    linkList.innerHTML = '';
+                    currentData.links.forEach((lnk, idx) => {
+                        const lBox = document.createElement('div');
+                        lBox.className = 'array-item sub-item';
+                        lBox.style.padding = '10px';
+                        lBox.style.marginBottom = '10px';
+                        lBox.style.background = '#f9f9fb';
+
+                        const head = document.createElement('div');
+                        head.className = 'array-item-header';
+                        head.innerHTML = `<h5 style="margin:0;">- ${lnk.label || '(未命名)'}</h5>`;
+                        const rmBtn = document.createElement('button');
+                        rmBtn.className = 'btn-danger'; rmBtn.textContent = '❌ 刪除';
+                        rmBtn.onclick = () => { if (confirm('刪除此連結？')) { currentData.links.splice(idx, 1); renderLinks(); } };
+                        head.appendChild(rmBtn);
+                        lBox.appendChild(head);
+
+                        [
+                            { key: 'label', label: '名稱（如：Facebook）' },
+                            { key: 'url', label: '網址（完整 https://...）' },
+                            { key: 'icon', label: 'icon 識別字（facebook / instagram / youtube / line）' },
+                        ].forEach(f => {
+                            const ui = createFieldInput(f.key, { type: 'text', label: f.label }, lnk);
+                            if (f.key === 'label') ui.querySelector('input').addEventListener('input', e => head.querySelector('h5').textContent = `- ${e.target.value || '(未命名)'}`);
+                            lBox.appendChild(ui);
+                        });
+
+                        linkList.appendChild(lBox);
+                    });
+                };
+
+                const addLinkBtn = document.createElement('button');
+                addLinkBtn.className = 'btn-success'; addLinkBtn.textContent = '➕ 新增外部連結';
+                addLinkBtn.onclick = () => { currentData.links.push({ label: '', url: '', icon: '' }); renderLinks(); };
+                linkSec.appendChild(addLinkBtn);
+
+                renderLinks();
+                editorContainer.appendChild(linkSec);
+            }
             else if (schema.type === "array" || schema.type === "nested_array") {
                 // ---------- 陣列模式 (Articles 新聞等) 或是 巢狀陣列 (Courses) ----------
                 let sourceArray = [];
@@ -1577,6 +1670,9 @@
                 finalContentToSave[schema.arrayKey] = currentData;
             }
             else if (schema.type === "about_custom") {
+                finalContentToSave = currentData;
+            }
+            else if (schema.type === "contact_custom") {
                 finalContentToSave = currentData;
             }
 

@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 動態填入期刊導覽連結（從 journals.json 讀取）
     injectJournalNavLinks();
 
+    // 動態填入聯絡資訊（從 contact.json 讀取）
+    injectContactInfo();
+
     initNavbar();
     initBackToTop();
     initMobileMenu();
@@ -52,6 +55,79 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSmoothScroll();
     initFooterYear();
 });
+
+/* ── 動態聯絡資訊填入 ── */
+async function injectContactInfo() {
+    try {
+        const res = await fetch(window.ROOT_PREFIX + 'assets/data/contact.json?v=' + Date.now());
+        if (!res.ok) return;
+        const d = await res.json();
+
+        // ── 電子信箱 ──
+        if (d.email) {
+            // footer 聯絡區塊
+            const emailItem = document.getElementById('footer-email-item');
+            const emailText = document.querySelector('[data-email-text]');
+            if (emailItem) emailItem.style.display = '';
+            if (emailText) {
+                emailText.textContent = d.email;
+                emailText.href = 'mailto:' + d.email;
+            }
+            // footer icon 連結
+            const emailIconLink = document.querySelector('[data-email-link]');
+            if (emailIconLink) {
+                emailIconLink.href = 'mailto:' + d.email;
+                emailIconLink.style.display = '';
+            }
+            // member 頁面的 mailto 按鈕（若存在）
+            document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+                if (a.href.includes('cap-cca.org')) {
+                    a.href = 'mailto:' + d.email;
+                    if (a.textContent.includes('@')) a.textContent = '📧 ' + d.email;
+                }
+            });
+        }
+
+        // ── 電話 ──
+        if (d.phone) {
+            const phoneItem = document.getElementById('footer-phone-item');
+            const phoneTxt = document.querySelector('[data-phone-text]');
+            if (phoneItem) phoneItem.style.display = '';
+            if (phoneTxt) phoneTxt.textContent = d.phone;
+        }
+
+        // ── 地址 ──
+        if (d.address) {
+            const addrItem = document.getElementById('footer-address-item');
+            const addrTxt = document.querySelector('[data-address-text]');
+            if (addrItem) addrItem.style.display = '';
+            if (addrTxt) addrTxt.textContent = d.address;
+        }
+
+        // ── 外部連結（社群）──
+        const socialContainer = document.getElementById('footer-social-links');
+        if (socialContainer && Array.isArray(d.links)) {
+            // Facebook SVG icon map
+            const iconMap = {
+                facebook: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>',
+                instagram: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+                youtube: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 8s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C15.2 4 12 4 12 4s-3.2 0-5.8.2c-.6 0-1.9 0-3 1.3C2.3 6 2 8 2 8S1.7 10.3 1.7 12.5v2.1C1.7 16.8 2 19 2 19c0 .5.3 2 1.2 2.8 1.1 1.2 2.6 1.1 3.3 1.2C8.8 23.2 12 23.3 12 23.3s3.2 0 5.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.3.3-4.4v-2.1C22.3 10.3 22 8 22 8zM9.7 15.5V8.6l7.3 3.5-7.3 3.4z"/></svg>',
+                line: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 5.8 2 10.5c0 4 3.4 7.4 8 8.2v3.3l4-2.7c.7.1 1.3.2 2 .2 5.5 0 10-3.8 10-8.5C26 5.8 17.5 2 12 2z"/></svg>',
+            };
+            d.links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.rel = 'noopener';
+                a.setAttribute('aria-label', link.label);
+                a.innerHTML = iconMap[link.icon] || link.label;
+                socialContainer.insertBefore(a, socialContainer.querySelector('[data-email-link]'));
+            });
+        }
+    } catch (e) {
+        console.warn('聯絡資訊載入失敗:', e);
+    }
+}
 
 /* ── 動態期刊導覽 ── */
 async function injectJournalNavLinks() {

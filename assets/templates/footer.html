@@ -8,13 +8,9 @@
                     style="height:48px;width:auto;filter:brightness(0) invert(1) opacity(.85);margin-bottom:var(--space-4);">
                 <div class="footer__brand-name">社團法人中華亞太文化交流協會</div>
                 <p class="footer__slogan">促進亞太地區人民間經濟、人文、<br>社會文化之間的交流與合作</p>
-                <div class="footer__social">
-                    <a href="https://facebook.com/cap-cca" target="_blank" rel="noopener" aria-label="Facebook">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                        </svg>
-                    </a>
-                    <a href="mailto:contact@cap-cca.org" aria-label="Email">
+                <div class="footer__social" id="footer-social-links">
+                    <!-- 動態注入社群連結 -->
+                    <a href="#" data-email-link aria-label="Email" style="display:none;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -43,17 +39,17 @@
                 <!-- 聯絡資訊 -->
                 <div class="footer__section">
                     <div class="footer__col-title">聯絡資訊</div>
-                    <div class="footer__contact-item">
+                    <div class="footer__contact-item" id="footer-email-item" style="display:none;">
                         <span class="footer__contact-icon">📧</span>
-                        <a href="mailto:contact@cap-cca.org" style="color:inherit;">contact@cap-cca.org</a>
+                        <a data-email-text href="#" style="color:inherit;"></a>
                     </div>
-                    <div class="footer__contact-item">
+                    <div class="footer__contact-item" id="footer-phone-item" style="display:none;">
                         <span class="footer__contact-icon">📞</span>
-                        <span>0X-XXXX-XXXX</span>
+                        <span data-phone-text></span>
                     </div>
-                    <div class="footer__contact-item">
+                    <div class="footer__contact-item" id="footer-address-item" style="display:none;">
                         <span class="footer__contact-icon">📍</span>
-                        <span>XX 市 XXX 區 XXX 路 XX 號</span>
+                        <span data-address-text></span>
                     </div>
                 </div>
 

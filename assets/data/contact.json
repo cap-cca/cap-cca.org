@@ -1,0 +1,17 @@
+{
+    "email": "capcca.org@gmail.com",
+    "phone": "0X-XXXX-XXXX",
+    "address": "XX 市 XXX 區 XXX 路 XX 號",
+    "links": [
+        {
+            "label": "Facebook",
+            "url": "https://facebook.com",
+            "icon": "facebook"
+        },
+        {
+            "label": "Line",
+            "url": "",
+            "icon": "line"
+        }
+    ]
+}
