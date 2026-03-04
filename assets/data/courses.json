@@ -7,11 +7,11 @@
             "description": "提升企業管理能力與領導力",
             "courses": [
                 {
-                    "name": "範例課程",
+                    "name": "課程範例",
                     "hours": "12",
                     "audience": "學生與教職員",
                     "fee": "請洽詢",
-                    "description": "<p>範例課程，詳細內容請洽詢。</p>"
+                    "description": "<p>課程範例<br>課程正在規劃中，詳細內容請聯絡本會。</p>"
                 }
             ]
         },

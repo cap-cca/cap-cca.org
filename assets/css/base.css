@@ -3,6 +3,15 @@
    全域基礎樣式：body、typography、連結
    ============================================================ */
 
+/* ── 自訂字型 ── */
+@font-face {
+    font-family: 'MoeLI';
+    src: url('../font/MoeLI.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
     font-family: var(--font-sans);
     font-size: var(--text-base);

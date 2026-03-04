@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本會章程 ｜社團法人中華亞太文化交流協會</title>
+    <meta name="description" content="社團法人中華亞太文化交流協會章程全文，包含總則、會員、組織架構、會議、財務及附則等條文。">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+
+    <style>
+        /* ── 章程目錄側欄 + 主體版型 ── */
+        .charter-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: var(--space-12);
+            align-items: start;
+        }
+
+        /* 側欄目錄（桌面固定，行動隱藏） */
+        .charter-toc {
+            position: sticky;
+            top: calc(var(--navbar-height) + var(--space-6));
+            background: var(--color-neutral-50);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5);
+        }
+
+        .charter-toc__title {
+            font-family: var(--font-serif);
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--color-neutral-700);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .charter-toc__list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .charter-toc__list a {
+            display: block;
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-xs);
+            color: var(--color-neutral-600);
+            border-radius: var(--radius-md);
+            transition: all var(--duration-fast);
+            text-decoration: none;
+        }
+
+        .charter-toc__list a:hover {
+            background: var(--color-primary-50);
+            color: var(--color-primary-700);
+        }
+
+        /* ── 章節 ── */
+        .charter-chapter {
+            padding: var(--space-8) 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .charter-chapter:last-child {
+            border-bottom: none;
+        }
+
+        .charter-chapter__title {
+            font-family: var(--font-serif);
+            font-size: var(--text-xl);
+            color: var(--color-primary-900);
+            margin-bottom: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .charter-chapter__title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1.2em;
+            background: var(--color-accent-500);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ── 條文 ── */
+        .charter-article {
+            margin-bottom: var(--space-5);
+        }
+
+        .charter-article__num {
+            font-family: var(--font-serif);
+            font-size: var(--text-base);
+            font-weight: 700;
+            color: var(--color-primary-700);
+            margin-bottom: var(--space-2);
+        }
+
+        .charter-article__text {
+            font-size: var(--text-base);
+            color: var(--color-neutral-700);
+            line-height: var(--leading-relaxed);
+            padding-left: var(--space-4);
+            border-left: 2px solid var(--color-neutral-200);
+        }
+
+        .charter-article__text p {
+            margin-bottom: var(--space-2);
+        }
+
+        .charter-article__text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ── 章程頂部資訊框 ── */
+        .charter-meta {
+            background: linear-gradient(135deg, var(--color-primary-50), var(--color-accent-50, #fdf8ee));
+            border: 1px solid var(--color-primary-100);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6) var(--space-8);
+            margin-bottom: var(--space-10);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-6);
+        }
+
+        .charter-meta__item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .charter-meta__label {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            color: var(--color-neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .charter-meta__value {
+            font-family: var(--font-serif);
+            font-size: var(--text-base);
+            color: var(--color-primary-900);
+            font-weight: 600;
+        }
+
+        /* 響應式 */
+        @media (max-width: 1023px) {
+            .charter-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .charter-toc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .charter-meta {
+                padding: var(--space-4) var(--space-5);
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <section class="page-banner">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="您的位置">
+                <a href="../">首頁</a><span aria-hidden="true">›</span>
+                <a href="../about/">關於協會</a><span aria-hidden="true">›</span>
+                <span class="current" aria-current="page">本會章程</span>
+            </nav>
+            <h1 class="page-banner__title">本會章程</h1>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <section class="section">
+            <div class="container" style="max-width: 1100px;">
+
+                <div class="charter-layout">
+
+                    <!-- ── 側欄目錄 ── -->
+                    <aside class="charter-toc" aria-label="章程目錄">
+                        <div class="charter-toc__title">📑 章程目錄</div>
+                        <ul class="charter-toc__list">
+                            <li><a href="#ch1">第一章　總則</a></li>
+                            <li><a href="#ch2">第二章　會員</a></li>
+                            <li><a href="#ch3">第三章　組織及職權</a></li>
+                            <li><a href="#ch4">第四章　會議</a></li>
+                            <li><a href="#ch5">第五章　經費及會計</a></li>
+                            <li><a href="#ch6">第六章　附則</a></li>
+                        </ul>
+                    </aside>
+
+                    <!-- ── 主要內容 ── -->
+                    <div class="charter-body">
+
+                        <!-- 章程資訊 -->
+                        <div class="charter-meta animate-on-scroll">
+                            <div class="charter-meta__item">
+                                <span class="charter-meta__label">主管機關備查</span>
+                                <span class="charter-meta__value">內政部 107年1月台內團字第1060088731號函</span>
+                            </div>
+                            <div class="charter-meta__item">
+                                <span class="charter-meta__label">最新版本</span>
+                                <span class="charter-meta__value">會員大會114年12月修正後通過施行</span>
+                            </div>
+                        </div>
+
+                        <!-- 第一章 總則 -->
+                        <div class="charter-chapter animate-on-scroll" id="ch1">
+                            <h2 class="charter-chapter__title">第一章　總則</h2>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 一 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會名稱為中華亞太文化交流協會（以下簡稱本會）。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 二 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會為依據人民團體法設立、非以營利為目的之社會團體，以促進亞太地區人民間經濟、人文、社會文化之間交流為宗旨。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 三 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會以全國行政區域為組織區域。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 四 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會會址設於主管機關所在地區，並得報經主管機關核准設分支機構。</p>
+                                    <p>前項分支機構組織簡則由理事會擬訂，報請主管機關核准後行之。</p>
+                                    <p>會址及分支機構之地址於設置及變更時應函報主管機關核備。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 五 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會之任務如下：</p>
+                                    <p>一、提供產業經營管理實務之教育訓練。</p>
+                                    <p>二、結合相關產業的個人和企業，共同促進產業之發展。</p>
+                                    <p>三、建立產業經營智庫或顧問團，對於業者提供諮詢顧問服務與協助。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 六 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會之主管機關為內政部。本會之目的事業應受各該事業主管機關之指導、監督。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第二章 會員 -->
+                        <div class="charter-chapter animate-on-scroll" id="ch2">
+                            <h2 class="charter-chapter__title">第二章　會員</h2>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 七 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會會員分下列三種：</p>
+                                    <p>一、基本會員：凡贊同本會宗旨經填寫入會申請書，經理事會審查通過，並繳納相關會費後，為基本會員。</p>
+                                    <p>二、榮譽會員：凡對於本會有重大貢獻者，經由理事會通過者，得聘為榮譽會員，每屆一聘。</p>
+                                    <p>三、贊助會員：凡贊同本會宗旨之個人或團體，願意捐助本會經費一定金額以上者，經理事會通過為贊助會員，團體得三名代表參加。</p>
+                                    <p>前項會員名冊應備齊予以主管機關備查。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 八 條</div>
+                                <div class="charter-article__text">
+                                    <p>基本會員有發言權，表決權、選舉權、被選舉權與罷免權。每一基本會員為一權；榮譽會員及贊助會員僅有發言權，並無表決權、選舉權、被選舉權與罷免權。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 九 條</div>
+                                <div class="charter-article__text">
+                                    <p>會員有遵守本會章程、決議，及繳納會費之義務。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 十 條</div>
+                                <div class="charter-article__text">
+                                    <p>會員（會員代表）有違反法令、章程或不遵守會員大會決議時，得經理事會決議，予以警告或停權處分，其危害團體情節重大者，得經會員大會決議予以除名。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十一條</div>
+                                <div class="charter-article__text">
+                                    <p>會員有下列情事之一者，為出會：</p>
+                                    <p>一、喪失會員資格者。</p>
+                                    <p>二、經會員大會決議除名者。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十二條</div>
+                                <div class="charter-article__text">
+                                    <p>會員應以書面並敘明理由向本會聲明退會。</p>
+                                    <p>會員經出會或退會，已繳納之各項費用不予退還。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第三章 組織及職權 -->
+                        <div class="charter-chapter animate-on-scroll" id="ch3">
+                            <h2 class="charter-chapter__title">第三章　組織及職權</h2>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十三條</div>
+                                <div class="charter-article__text">
+                                    <p>本會以會員大會為最高權力機構。會員人數超過三百人以上時得分區比例選出會員代表，再召開會員代表大會，行使會員大會職權。會員代表任期3年，其名額及選舉辦法由理事會擬訂，報請主管機關核備後行之。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十四條</div>
+                                <div class="charter-article__text">
+                                    <p>會員（會員代表）大會之職權如下：</p>
+                                    <p>一、訂定與變更章程。</p>
+                                    <p>二、選舉及罷免理事、監事。</p>
+                                    <p>三、議決入會費、常年會費、事業費及會員捐款之數額及方式。</p>
+                                    <p>四、議決年度工作計畫、報告及預算、決算。</p>
+                                    <p>五、議決會員之除名處分。</p>
+                                    <p>六、議決財產之處分。</p>
+                                    <p>七、議決本會之解散。</p>
+                                    <p>八、議決與會員權利義務有關之其他重大事項。</p>
+                                    <p>前項第八款重大事項之範圍由理事會定之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十五條</div>
+                                <div class="charter-article__text">
+                                    <p>本會置理事9人、監事3人，由會員選舉之，分別成立理事會、監事會。選舉前項理事、監事時，依計票情形得同時選出候補理事3人，候補監事1人，遇理事、監事出缺時，分別依序遞補之。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十六條</div>
+                                <div class="charter-article__text">
+                                    <p>理事會之職權如下：</p>
+                                    <p>一、審定會員之資格。</p>
+                                    <p>二、選舉及罷免常務理事、副理事長、理事長。</p>
+                                    <p>三、議決理事、常務理事、副理事長及理事長之辭職。</p>
+                                    <p>四、聘免工作人員。</p>
+                                    <p>五、擬訂年度工作計畫、報告及預算、決算。</p>
+                                    <p>六、其他應執行事項。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十七條</div>
+                                <div class="charter-article__text">
+                                    <p>理事會置常務理事3人，由理事互選之，並由理事就常務理事中選舉1人為理事長；就常務理事中選舉1人為副理事長。</p>
+                                    <p>理事長對內綜理督導會務，對外代表本會，並擔任會員大會、理事會主席。</p>
+                                    <p>理事長因事不能執行職務時，應由副理事長代理之。</p>
+                                    <p>理事長、副理事長出缺時，應於1個月內補選之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十八條</div>
+                                <div class="charter-article__text">
+                                    <p>監事會之職權如下：</p>
+                                    <p>一、監察理事會工作之執行。</p>
+                                    <p>二、審核年度決算。</p>
+                                    <p>三、選舉及罷免常務監事。</p>
+                                    <p>四、議決監事及常務監事之辭職。</p>
+                                    <p>五、其他應監察事項。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第十九條</div>
+                                <div class="charter-article__text">
+                                    <p>監事會置常務監事1人，由監事互選之，監察日常會務，並擔任監事會主席。</p>
+                                    <p>常務監事因事不能執行職務時，應指定監事1人代理之，未指定或不能指定時，由監事互推1人代理之。</p>
+                                    <p>常務監事出缺時應於1個月內補選之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十條</div>
+                                <div class="charter-article__text">
+                                    <p>理事、監事均為無給職，任期3年，連選得連任。理事長之連任，以1次為限。理事、監事之任期自召開本屆第1次理監事會之日起計算。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十一條</div>
+                                <div class="charter-article__text">
+                                    <p>理事、監事有下列情事之一者，應即解任：</p>
+                                    <p>一、喪失會員資格者。</p>
+                                    <p>二、因故辭職經理事會或監事會決議通過者。</p>
+                                    <p>三、被罷免或撤免者。</p>
+                                    <p>四、受停權處分期間逾任期二分之一者。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十二條</div>
+                                <div class="charter-article__text">
+                                    <p>本會置秘書長1人，承理事長之命處理本會事務，其他工作人員若干人，由理事長提名經理事會通過聘免之，並報主管機關備查。</p>
+                                    <p>前項工作人員不得由理事監事擔任。</p>
+                                    <p>工作人員權責及分層負責事項由理事會另定之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十三條</div>
+                                <div class="charter-article__text">
+                                    <p>本會得設各種委員會、小組或其他內部作業組織，其組織簡則經理事會通過後施行，變更時亦同。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十四條</div>
+                                <div class="charter-article__text">
+                                    <p>本會得由理事會聘請名譽理事長1人，名譽理事、顧問若干人，其聘期與理事、監事之任期同。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第四章 會議 -->
+                        <div class="charter-chapter animate-on-scroll" id="ch4">
+                            <h2 class="charter-chapter__title">第四章　會議</h2>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十五條</div>
+                                <div class="charter-article__text">
+                                    <p>會員（會員代表）大會分定期會議與臨時會議二種，由理事長召集，召集時除緊急事故之臨時會議外應於15日前以書面通知之。</p>
+                                    <p>定期會議每年召開1次，臨時會議於理事會認為必要，或經會員（會員代表）五分之一以上之請求，或監事會函請召集時召開之。</p>
+                                    <p>本會辦理法人登記後，臨時會議經會員（會員代表）十分之一以上之請求召開之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十六條</div>
+                                <div class="charter-article__text">
+                                    <p>會員（會員代表）不能親自出席會員大會時，得以書面委託其他會員（會員代表）代理，每一會員（會員代表）以代理1人為限。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十七條</div>
+                                <div class="charter-article__text">
+                                    <p>會員（會員代表）大會之決議，以會員（會員代表）過半數之出席，出席人數較多數之同意行之。但下列事項之決議以出席人數三分之二以上同意行之：</p>
+                                    <p>一、章程之訂定與變更。</p>
+                                    <p>二、會員（會員代表）之除名。</p>
+                                    <p>三、理事、監事之罷免。</p>
+                                    <p>四、財產之處分。</p>
+                                    <p>五、本會之解散。</p>
+                                    <p>六、其他與會員權利義務有關之重大事項。</p>
+                                    <p>本會辦理法人登記後，章程之變更以出席人數四分之三以上之同意或全體會員三分之二以上書面之同意行之。</p>
+                                    <p>本會之解散，得隨時以全體會員三分之二以上之可決議解散之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十八條</div>
+                                <div class="charter-article__text">
+                                    <p>理事會每六個月召開1次，監事會每六個月召開1次，必要時得召開聯席會議或臨時會議。</p>
+                                    <p>前項會議召集時除臨時會議外，應於7日前以書面通知，會議之決議，各以理事、監事過半數之出席，出席人數較多數之同意行之。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第二十九條</div>
+                                <div class="charter-article__text">
+                                    <p>理事應出席理事會議，監事應出席監事會議，理事會、監事會不得委託出席；理事、監事連續2次無故缺席理事會、監事會者，視同辭職。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第五章 經費及會計 -->
+                        <div class="charter-chapter animate-on-scroll" id="ch5">
+                            <h2 class="charter-chapter__title">第五章　經費及會計</h2>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第 三十 條</div>
+                                <div class="charter-article__text">
+                                    <p>本會經費來源如下：</p>
+                                    <p>一、入會費：</p>
+                                    <p style="padding-left:1.5rem;">基本會員：新台幣參仟元正，入會時一次繳納之。</p>
+                                    <p style="padding-left:1.5rem;">榮譽會員：無需繳入納入會費。</p>
+                                    <p style="padding-left:1.5rem;">贊助會員：新台幣貳萬元正以上，入會時一次繳納之。</p>
+                                    <p style="padding-left:1.5rem;">上列所繳各項費用，概不退還。</p>
+                                    <p>二、常年會費：</p>
+                                    <p style="padding-left:1.5rem;">基本會費：每年新台幣壹仟元正。</p>
+                                    <p style="padding-left:1.5rem;">榮譽會員：無需繳納常年會費。</p>
+                                    <p style="padding-left:1.5rem;">贊助會員：每年新台幣貳萬元正。</p>
+                                    <p>三、事業費。</p>
+                                    <p>四、會員捐款。</p>
+                                    <p>五、委託收益。</p>
+                                    <p>六、基金及其孳息。</p>
+                                    <p>七、其他收入。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第三十一條</div>
+                                <div class="charter-article__text">
+                                    <p>本會會計年度以曆年為準，自每年1月1日起至12月31日止。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第三十二條</div>
+                                <div class="charter-article__text">
+                                    <p>本會於會計年度開始前由理事會編造年度工作計畫及收支預算表，並於年度終了後3個月內由理事會編造上年度工作報告及會計報告，送監事會審核後造具審核意見書送還理事會，連同當年度工作計畫及收支預算表，提經會員（會員代表）大會通過後報主管機關備查。會員（會員代表）大會因故未能如期召開，可先經本會理事會及監事會或理監事聯席會議通過，事後提報大會追認後，再報請主管機關備查。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第三十三條</div>
+                                <div class="charter-article__text">
+                                    <p>本會於解散後，剩餘財產歸屬所在地之地方自治團體或主管機關指定之機關團體所有。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第六章 附則 -->
+                        <div class="charter-chapter animate-on-scroll" id="ch6">
+                            <h2 class="charter-chapter__title">第六章　附則</h2>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第三十四條</div>
+                                <div class="charter-article__text">
+                                    <p>本章程未規定事項，悉依有關法令規定辦理。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第三十五條</div>
+                                <div class="charter-article__text">
+                                    <p>本章程經會員大會通過，報經主管機關核備後施行，變更時亦同。</p>
+                                </div>
+                            </div>
+
+                            <div class="charter-article">
+                                <div class="charter-article__num">第三十六條</div>
+                                <div class="charter-article__text">
+                                    <p>本章程經本會114年12月13日第2屆第1次會員大會通過。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- /.charter-body -->
+                </div><!-- /.charter-layout -->
+
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/components.js"></script>
+</body>
+
+</html>
