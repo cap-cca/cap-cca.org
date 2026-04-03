@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         injectTemplate('#navbar-placeholder', window.ROOT_PREFIX + 'assets/templates/navbar.html'),
         injectTemplate('#footer-placeholder', window.ROOT_PREFIX + 'assets/templates/footer.html'),
     ]);
+    window.navbarLoaded = true;
+    document.dispatchEvent(new Event('navbarLoaded'));
 
     // 動態填入期刊導覽連結（從 journals.json 讀取）
     injectJournalNavLinks();
@@ -80,7 +82,7 @@ async function injectContactInfo() {
                 emailIconLink.style.display = '';
             }
             // member 頁面的 mailto 按鈕（若存在）
-            document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+            document.querySelectorAll('a[href^="mailto:"]:not([data-email-text])').forEach(a => {
                 if (a.href.includes('cap-cca.org')) {
                     a.href = 'mailto:' + d.email;
                     if (a.textContent.includes('@')) a.textContent = '📧 ' + d.email;
